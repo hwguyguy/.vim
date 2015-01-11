@@ -1,0 +1,13 @@
+set bg=dark
+set noswapfile
+set viminfo=
+syn on
+set hidden
+set confirm
+set incsearch
+set hlsearch
+set ignorecase
+set smartcase
+set autochdir
+set showcmd
+set wildmenu
