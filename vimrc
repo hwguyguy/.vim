@@ -18,7 +18,7 @@ set langmenu=en_US.UTF-8
 " Variables {
 
 if has('win32')
-	if filereadable($HOME.'/_vimrc' || $HOME.'/vimfiles/_vimrc')
+	if filereadable($HOME.'/_vimrc') || filereadable($HOME.'/vimfiles/vimrc')
 		let vimfiles_dir = $HOME.'/vimfiles/'
 	else
 		let vimfiles_dir = $VIM.'/vimfiles/'
