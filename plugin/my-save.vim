@@ -14,7 +14,7 @@ sub my_save {
 		$path =~ s/$cache_dir/$bak_dir/;
 		$dir = dirname($path);
 		make_path($dir);
-		VIM::DoCommand(':w ' . $path . '');
+		VIM::DoCommand(':w! ' . $path . '');
 	}
 }
 EOF
