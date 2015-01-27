@@ -230,7 +230,7 @@ execute 'set undodir='.vimfiles_dir.'.undo'
 set undofile
 
 " backup files edited from WinSCP
-if (has('perl') && has('win32'))
+if (has('win32'))
 	let g:my_save_cache_dir='C:\/app\/WinSCP\/cache\/scp[0-9]*\/'
 	let g:my_save_bak_dir='C:\/app\/WinSCP\/bak\/'
 	augroup my_save
