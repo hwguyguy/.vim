@@ -508,7 +508,7 @@ let g:EasyMotion_smartcase = 1
 
 " Emmet-vim {
 
-"let g:user_emmet_leader_key='<C-Z>'
+let g:user_emmet_expandabbr_key = '<C-j>'
 
 " }
 
