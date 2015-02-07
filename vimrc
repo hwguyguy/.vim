@@ -153,10 +153,10 @@ if has('gui_running')
 	set guioptions-=r "scrollbar
 	set guicursor+=a:blinkon0
 	if has('win32')
-		set guifont=Consolas:h11,Inconsolata:h12,DejaVu_Sans_Mono:h11,Lucida_Sans_Typewriter:h10,Lucida_Console:h10,Courier_New:h10 "gfn
+		set guifont=Consolas:h11,DejaVu_Sans_Mono:h11,Lucida_Sans_Typewriter:h10,Lucida_Console:h10,Courier_New:h10 "gfn
 	endif
 	if has('unix')
-		set guifont=Inconsolata\ 12,Ubuntu\ Mono\ 12,DejaVu\ Sans\ Mono\ 10
+		set guifont=Ubuntu\ Mono\ 12,DejaVu\ Sans\ Mono\ 10
 	endif
 	"winpos 400 20
 	"set lines=40 columns=140
