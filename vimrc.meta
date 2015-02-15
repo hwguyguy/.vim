@@ -51,3 +51,6 @@ set <M-S-w>=W
 set <M-S-x>=X
 set <M-S-y>=Y
 set <M-S-z>=Z
+
+set <M-;>=;
+set <M-'>='

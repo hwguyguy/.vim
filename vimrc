@@ -111,6 +111,7 @@ Plugin 'tpope/vim-rails'
 Plugin 'pangloss/vim-javascript'
 Plugin 'tpope/vim-abolish'
 Plugin 'slim-template/vim-slim'
+Plugin 'chrisbra/NrrwRgn'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -534,17 +535,17 @@ nnoremap <C-k> O<esc>
 nnoremap <F4> :tabe<space>
 nnoremap <F5> gT
 nnoremap <F6> gt
-nnoremap <F7> v
-nnoremap <F8> s
+nnoremap <F7> <C-w>v
+nnoremap <F8> <C-w>s
 nnoremap <F12> "=strftime("%c")<CR>p
 inoremap <F12> <esc>"=strftime("%c")<CR>p
 
 nnoremap <C-s> /<C-r>*<cr>ddggp$
 
-nnoremap <M-h> h
-nnoremap <M-j> j
-nnoremap <M-k> k
-nnoremap <M-l> l
+nnoremap <M-h> <C-w>h
+nnoremap <M-j> <C-w>j
+nnoremap <M-k> <C-w>k
+nnoremap <M-l> <C-w>l
 
 nnoremap \| :noh<cr>
 
@@ -558,6 +559,9 @@ inoremap <C-f> <C-o>l
 inoremap <C-b> <C-o>h
 inoremap <M-f> <C-o>w
 inoremap <M-b> <C-o>b
+inoremap <M-d> <C-o>de
+inoremap <M-h> <C-w>
+inoremap <M-BS> <C-w>
 
 nnoremap <M-;> :call NERDComment(0, 'toggle')<cr>
 vnoremap <M-;> :call NERDComment(0, 'toggle')<cr>
