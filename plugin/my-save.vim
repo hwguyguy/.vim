@@ -9,7 +9,8 @@ function! MySave()
 		if !isdirectory(l:dir)
 			call mkdir(l:dir, 'p')
 		endif
-		execute 'w! '.l:path
+		let l:lines = getline(1, '$')
+		call writefile(l:lines, l:path)
 	endif
 endfunction
 
