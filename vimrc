@@ -339,7 +339,8 @@ augroup END
 let g:html_indent_inctags='p'
 
 augroup ruby_indent
-	autocmd FileType ruby setlocal ts=2 sw=2 sts=2 et ai
+	autocmd!
+	autocmd FileType ruby,eruby setlocal ts=2 sw=2 sts=2 et ai
 augroup END
 
 " }
