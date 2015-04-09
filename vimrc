@@ -73,10 +73,13 @@ Plugin 'chriskempson/tomorrow-theme', {'rtp': 'vim'}
 "Plugin 'vim-scripts/pyte'
 "Plugin 'vim-scripts/xoria256.vim'
 
+Plugin 'bkad/CamelCaseMotion'
 Plugin 'Lokaltog/vim-easymotion'
 Plugin 'Shougo/unite.vim'
 if (has('lua') && (v:version > 703 || v:version == 703 && has('patch885')))
 	Plugin 'Shougo/neocomplete.vim'
+	Plugin 'Shougo/neosnippet'
+	Plugin 'Shougo/neosnippet-snippets'
 endif
 Plugin 'kien/ctrlp.vim'
 Plugin 'jlanzarotta/bufexplorer'
@@ -91,14 +94,11 @@ Plugin 'scrooloose/nerdcommenter'
 Plugin 'matchit.zip'
 Plugin 'mattn/emmet-vim'
 Plugin 'scrooloose/nerdtree'
-Plugin 'Shougo/vimfiler.vim'
+"Plugin 'Shougo/vimfiler.vim'
 Plugin 'majutsushi/tagbar'
 Plugin 'lilydjwg/colorizer'
 Plugin 'SmartCase'
 Plugin 'tpope/vim-fugitive'
-"if has('mac')
-	"Plugin 'vim-scripts/ColorX'
-"endif
 "Plugin 'vim-scripts/repeat-motion'
 if has('python')
 	Plugin 'klen/python-mode'
@@ -112,6 +112,7 @@ Plugin 'pangloss/vim-javascript'
 Plugin 'tpope/vim-abolish'
 Plugin 'slim-template/vim-slim'
 Plugin 'chrisbra/NrrwRgn'
+Plugin 'chrisbra/csv.vim'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -531,6 +532,8 @@ map w <Plug>CamelCaseMotion_w
 map b <Plug>CamelCaseMotion_b
 map e <Plug>CamelCaseMotion_e
 
+nnoremap j gj
+nnoremap k gk
 nnoremap <C-j> o<esc>
 nnoremap <C-k> O<esc>
 nnoremap <F4> :tabe<space>
@@ -691,6 +694,28 @@ let g:neocomplete#sources#omni#input_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
 " For perlomni.vim setting.
 " https://github.com/c9s/perlomni.vim
 let g:neocomplete#sources#omni#input_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
+
+" }
+
+" Neosnippet {
+
+" Plugin key-mappings.
+imap <C-k>     <Plug>(neosnippet_expand_or_jump)
+smap <C-k>     <Plug>(neosnippet_expand_or_jump)
+xmap <C-k>     <Plug>(neosnippet_expand_target)
+
+" SuperTab like snippets behavior.
+imap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+\ "\<Plug>(neosnippet_expand_or_jump)"
+\: pumvisible() ? "\<C-n>" : "\<TAB>"
+smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+\ "\<Plug>(neosnippet_expand_or_jump)"
+\: "\<TAB>"
+
+" For snippet_complete marker.
+if has('conceal')
+  set conceallevel=2 concealcursor=i
+endif
 
 " }
 
