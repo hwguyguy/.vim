@@ -100,11 +100,11 @@ Plugin 'lilydjwg/colorizer'
 Plugin 'SmartCase'
 Plugin 'tpope/vim-fugitive'
 "Plugin 'vim-scripts/repeat-motion'
-if has('python')
-	Plugin 'klen/python-mode'
-endif
-Plugin 'jmcomets/vim-pony'
-Plugin '2072/PHP-Indenting-for-VIm'
+"if has('python')
+	"Plugin 'klen/python-mode'
+"endif
+"Plugin 'jmcomets/vim-pony'
+"Plugin '2072/PHP-Indenting-for-VIm'
 Plugin 'vim-ruby/vim-ruby'
 Plugin 'tpope/vim-endwise'
 Plugin 'tpope/vim-rails'
@@ -113,6 +113,11 @@ Plugin 'tpope/vim-abolish'
 Plugin 'slim-template/vim-slim'
 Plugin 'chrisbra/NrrwRgn'
 Plugin 'chrisbra/csv.vim'
+Plugin 'hail2u/vim-css3-syntax'
+Plugin 'cakebaker/scss-syntax.vim'
+"Plugin 'groenewege/vim-less'
+Plugin 'benmills/vimux'
+Plugin 'terryma/vim-multiple-cursors'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -474,6 +479,7 @@ if has('win32')
 	let g:ctrlp_cache_dir = vimfiles_dir.'/.cache/ctrlp'
 endif
 
+let g:ctrlp_map = ''
 let g:ctrlp_prompt_mappings = {
   \ 'PrtSelectMove("j")':   ['<c-n>', '<down>'],
   \ 'PrtSelectMove("k")':   ['<c-p>', '<up>'],
@@ -522,6 +528,24 @@ let g:AutoPairsShortcutBackInsert = '<M-]>'
 
 " }
 
+" vim-multiple-cursors {
+
+" Called once right before you start selecting multiple cursors
+function! Multiple_cursors_before()
+	if exists(':NeoCompleteLock')==2
+		exe 'NeoCompleteLock'
+	endif
+endfunction
+
+" Called once only when the multiple selection is canceled (default <Esc>)
+function! Multiple_cursors_after()
+	if exists(':NeoCompleteUnlock')==2
+		exe 'NeoCompleteUnlock'
+	endif
+endfunction
+
+" }
+
 " Keybindings {
 
 set winaltkeys=no "wak
@@ -534,6 +558,8 @@ map e <Plug>CamelCaseMotion_e
 
 nnoremap j gj
 nnoremap k gk
+nnoremap gj j
+nnoremap gk k
 nnoremap <C-j> o<esc>
 nnoremap <C-k> O<esc>
 nnoremap <F4> :tabe<space>
@@ -554,8 +580,10 @@ nnoremap <M-l> <C-w>l
 nnoremap \| :noh<cr>
 
 inoremap <C-g> <esc>
+inoremap <M-space> <esc>
 cnoremap <C-g> <C-c>
 vnoremap <C-g> <esc>
+vnoremap <M-space> <esc>
 nnoremap <M-x> :
 inoremap <M-x> <C-o>:
 inoremap <C-e> <C-o>A
@@ -599,6 +627,7 @@ vnoremap <silent> # :<C-U>
   \gV:call setreg('"', old_reg, old_regtype)<CR>
 
 map <M-s> <Plug>(easymotion-s)
+map <M-w> <Plug>(easymotion-bd-w)
 map <Leader>s <Plug>(easymotion-s)
 map <Leader>w <Plug>(easymotion-bd-w)
 map <Leader>l <Plug>(easymotion-bd-jk)

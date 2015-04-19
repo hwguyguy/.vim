@@ -11,3 +11,36 @@ set smartcase
 set autochdir
 set showcmd
 set wildmenu
+
+nnoremap j gj
+nnoremap k gk
+nnoremap gj j
+nnoremap gk k
+nnoremap <C-j> o<esc>
+nnoremap <C-k> O<esc>
+nnoremap <F4> :tabe<space>
+nnoremap <F5> gT
+nnoremap <F6> gt
+nnoremap <F7> <C-w>v
+nnoremap <F8> <C-w>s
+nnoremap <M-h> <C-w>h
+nnoremap <M-j> <C-w>j
+nnoremap <M-k> <C-w>k
+nnoremap <M-l> <C-w>l
+nnoremap \| :noh<cr>
+
+inoremap <C-g> <esc>
+inoremap <M-space> <esc>
+cnoremap <C-g> <C-c>
+vnoremap <C-g> <esc>
+vnoremap <M-space> <esc>
+nnoremap <M-x> :
+inoremap <M-x> <C-o>:
+inoremap <C-e> <C-o>A
+inoremap <C-f> <C-o>l
+inoremap <C-b> <C-o>h
+inoremap <M-f> <C-o>w
+inoremap <M-b> <C-o>b
+inoremap <M-d> <C-o>de
+inoremap <M-h> <C-w>
+inoremap <M-BS> <C-w>
