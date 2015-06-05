@@ -100,7 +100,7 @@ Plugin 'lilydjwg/colorizer'
 Plugin 'SmartCase'
 Plugin 'tpope/vim-fugitive'
 "Plugin 'vim-scripts/repeat-motion'
-"if has('python')
+"if (has('python') || has('python3'))
 	"Plugin 'klen/python-mode'
 "endif
 "Plugin 'jmcomets/vim-pony'
@@ -132,11 +132,12 @@ endif
 
 " Appearence {
 
-if exists("&relativenumber")
-	set rnu			" line numbers, :set nu | set relativenumber, set rnu, set nornu
-else
-	set nu
-endif
+set nonu
+"if exists("&relativenumber")
+	"set rnu			" line numbers, :set nu | set relativenumber, set rnu, set nornu
+"else
+	"set nu
+"endif
 
 " Set color scheme according to current time of day.
 function! s:HourColor()
@@ -568,16 +569,13 @@ nnoremap <F6> gt
 nnoremap <F7> <C-w>v
 nnoremap <F8> <C-w>s
 nnoremap <F12> "=strftime("%c")<CR>p
-inoremap <F12> <esc>"=strftime("%c")<CR>p
-
-nnoremap <C-s> /<C-r>*<cr>ddggp$
-
 nnoremap <M-h> <C-w>h
 nnoremap <M-j> <C-w>j
 nnoremap <M-k> <C-w>k
 nnoremap <M-l> <C-w>l
-
 nnoremap \| :noh<cr>
+nnoremap <kPlus> <C-a>
+nnoremap <kMinus> <C-x>
 
 inoremap <C-g> <esc>
 inoremap <M-space> <esc>
@@ -586,6 +584,7 @@ vnoremap <C-g> <esc>
 vnoremap <M-space> <esc>
 nnoremap <M-x> :
 inoremap <M-x> <C-o>:
+
 inoremap <C-e> <C-o>A
 inoremap <C-f> <C-o>l
 inoremap <C-b> <C-o>h
@@ -594,6 +593,7 @@ inoremap <M-b> <C-o>b
 inoremap <M-d> <C-o>de
 inoremap <M-h> <C-w>
 inoremap <M-BS> <C-w>
+inoremap <F12> <esc>"=strftime("%c")<CR>p
 
 nnoremap <M-;> :call NERDComment(0, 'toggle')<cr>
 vnoremap <M-;> :call NERDComment(0, 'toggle')<cr>
@@ -729,7 +729,7 @@ let g:neocomplete#sources#omni#input_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
 " Neosnippet {
 
 " Plugin key-mappings.
-imap <C-k>     <Plug>(neosnippet_expand_or_jump)
+"imap <C-k>     <Plug>(neosnippet_expand_or_jump)
 smap <C-k>     <Plug>(neosnippet_expand_or_jump)
 xmap <C-k>     <Plug>(neosnippet_expand_target)
 
@@ -744,6 +744,10 @@ smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
 " For snippet_complete marker.
 if has('conceal')
   set conceallevel=2 concealcursor=i
+endif
+
+if has('win32')
+	let g:neosnippet#data_directory = vimfiles_dir.'.cache/neosnippet'
 endif
 
 " }
