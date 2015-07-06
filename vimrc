@@ -100,9 +100,9 @@ Plugin 'lilydjwg/colorizer'
 Plugin 'SmartCase'
 Plugin 'tpope/vim-fugitive'
 "Plugin 'vim-scripts/repeat-motion'
-"if (has('python') || has('python3'))
-	"Plugin 'klen/python-mode'
-"endif
+if (!has('win32') && (has('python') || has('python3')))
+	Plugin 'klen/python-mode'
+endif
 "Plugin 'jmcomets/vim-pony'
 "Plugin '2072/PHP-Indenting-for-VIm'
 Plugin 'vim-ruby/vim-ruby'
@@ -138,6 +138,8 @@ set nonu
 "else
 	"set nu
 "endif
+
+set cursorline
 
 " Set color scheme according to current time of day.
 function! s:HourColor()
@@ -507,7 +509,7 @@ let g:syntastic_check_on_open=1
 "let g:syntastic_perl_checkers = ['perl', 'podchecker']
 let g:syntastic_mode_map = { "mode": "active",
 			\ "active_filetypes": ["php"],
-			\ "passive_filetypes": ["python"] }
+			\ "passive_filetypes": ["text", "vim", "python"] }
 
 " }
 
@@ -729,9 +731,9 @@ let g:neocomplete#sources#omni#input_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
 " Neosnippet {
 
 " Plugin key-mappings.
-"imap <C-k>     <Plug>(neosnippet_expand_or_jump)
-smap <C-k>     <Plug>(neosnippet_expand_or_jump)
-xmap <C-k>     <Plug>(neosnippet_expand_target)
+imap <C-l>     <Plug>(neosnippet_expand_or_jump)
+smap <C-l>     <Plug>(neosnippet_expand_or_jump)
+xmap <C-l>     <Plug>(neosnippet_expand_target)
 
 " SuperTab like snippets behavior.
 imap <expr><TAB> neosnippet#expandable_or_jumpable() ?
