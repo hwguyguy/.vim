@@ -118,6 +118,7 @@ Plugin 'cakebaker/scss-syntax.vim'
 "Plugin 'groenewege/vim-less'
 Plugin 'benmills/vimux'
 Plugin 'terryma/vim-multiple-cursors'
+Plugin 'osyo-manga/vim-anzu'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -222,6 +223,7 @@ let g:airline_right_sep=''
 "endif
 let g:airline_section_y='[%{&ff}]%{&fenc}'
 let g:airline_section_z='%l/%L %c,%v %P'
+let g:airline#extensions#whitespace#mixed_indent_algo = 1
 
 " }
 
@@ -491,6 +493,7 @@ let g:ctrlp_prompt_mappings = {
   \ }
 
 let g:ctrlp_match_window = 'top,order:ttb,min:1,max:10,results:10'
+let g:ctrlp_root_markers = ['.ctrlp']
 
 " }
 
@@ -635,6 +638,9 @@ map <Leader>w <Plug>(easymotion-bd-w)
 map <Leader>l <Plug>(easymotion-bd-jk)
 map <Leader>/ <Plug>(easymotion-bd-n)
 map <Leader>r <Plug>(easymotion-repeat)
+
+nmap n <Plug>(anzu-n-with-echo)
+nmap N <Plug>(anzu-N-with-echo)
 
 " }
 
