@@ -225,6 +225,8 @@ let g:airline_section_y='[%{&ff}]%{&fenc}'
 let g:airline_section_z='%l/%L %c,%v %P'
 let g:airline#extensions#whitespace#mixed_indent_algo = 1
 
+let g:airline#extensions#anzu#enabled=0
+
 " }
 
 " Backup files {
@@ -552,6 +554,18 @@ endfunction
 
 " }
 
+" Commands {
+
+function! CommandCabbr(abbreviation, expansion)
+	execute 'cabbr ' . a:abbreviation . ' <c-r>=getcmdpos() == 1 && getcmdtype() == ":" ? "' . a:expansion . '" : "' . a:abbreviation . '"<CR>'
+endfunction
+command! -nargs=+ CommandCabbr call CommandCabbr(<f-args>)
+
+"command Rc :e $HOME/.vim/vimrc
+"CommandCabbr rc Rc
+
+" }
+
 " Keybindings {
 
 set winaltkeys=no "wak
@@ -613,6 +627,7 @@ nnoremap <Leader>bb :Unite -no-split -start-insert buffer<cr>
 nnoremap <Leader>ff :Unite -no-split -start-insert file<cr>
 nnoremap <Leader>fb :Unite -no-split -start-insert file buffer<cr>
 nnoremap <Leader>fd :CtrlP<cr>
+nnoremap <Leader>fp :Unite -no-split -start-insert file_rec:!<cr>
 nnoremap <Leader>y :Unite history/yank<cr>
 
 nnoremap <silent> + :let @/ .= '\\|\<'.expand('<cword>').'\>'<cr>
