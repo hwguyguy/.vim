@@ -2,3 +2,5 @@
 !/.gitignore
 /bundle
 /vimrc.override
+/eclim
+/plugin/eclim.vim

@@ -775,6 +775,20 @@ endif
 
 " }
 
+" Eclim {
+
+let g:EclimLocateFileDefaultAction = 'edit'
+
+let g:EclimCompletionMethod = 'omnifunc'
+
+if !exists('g:neocomplete#force_omni_input_patterns')
+	let g:neocomplete#force_omni_input_patterns = {}
+endif
+let g:neocomplete#force_omni_input_patterns.java =
+			\ '\%(\h\w*\|)\)\.\w*'
+
+" }
+
 " Override {
 
 let vimrc_override = vimfiles_dir.'vimrc.override'
