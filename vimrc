@@ -87,6 +87,7 @@ Plugin 'mbbill/undotree'
 Plugin 'sickill/vim-pasta'
 Plugin 'godlygeek/tabular'
 Plugin 'jiangmiao/auto-pairs'
+Plugin 'dbakker/vim-projectroot'
 Plugin 'bling/vim-airline'
 Plugin 'tpope/vim-surround'
 Plugin 'scrooloose/syntastic'
@@ -218,9 +219,11 @@ let g:airline_mode_map = {
 		\ }
 let g:airline_left_sep=''
 let g:airline_right_sep=''
-"if has('gui_running')
-"	let g:airline_section_b='%{getcwd()}'
-"endif
+function! AirlineInit()
+	call airline#parts#define_function('projectroot', 'ProjectRootGuess')
+	let g:airline_section_c = airline#section#create_right(['file', '', 'projectroot'])
+endfunction
+autocmd VimEnter * call AirlineInit()
 let g:airline_section_y='[%{&ff}]%{&fenc}'
 let g:airline_section_z='%l/%L %c,%v %P'
 let g:airline#extensions#whitespace#mixed_indent_algo = 1
