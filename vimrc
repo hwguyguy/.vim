@@ -96,7 +96,7 @@ Plugin 'matchit.zip'
 Plugin 'mattn/emmet-vim'
 Plugin 'scrooloose/nerdtree'
 "Plugin 'Shougo/vimfiler.vim'
-Plugin 'majutsushi/tagbar'
+"Plugin 'majutsushi/tagbar'
 Plugin 'lilydjwg/colorizer'
 Plugin 'SmartCase'
 Plugin 'tpope/vim-fugitive'
@@ -174,15 +174,12 @@ if has('gui_running')
 	"winpos 400 20
 	"set lines=40 columns=140
 	"set linespace=1 "lsp
-	colorscheme solarized
-	set bg=light
 	"call s:HourColor()
 	"set cursorline "cul, highlight current line
 else
 	set t_Co=256			"set terminal to 256 color
 	set t_Sf=[3%p1%dm
 	set t_Sb=[4%p1%dm
-	colorscheme wombat256
 endif
 
 " No blinking cursor in linux console
@@ -379,6 +376,12 @@ autocmd Syntax c,cpp,java,perl,javascript normal zR
 set foldlevelstart=4
 "set foldmarker=
 let javascript_fold=1
+
+" }
+
+" Diff {
+
+set diffopt=vertical
 
 " }
 
