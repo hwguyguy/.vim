@@ -216,13 +216,12 @@ let g:airline_mode_map = {
 		\ }
 let g:airline_left_sep=''
 let g:airline_right_sep=''
-function! AirlineInit()
+function! AirlineAfterInit()
 	if exists('g:loaded_airline') && g:loaded_airline && exists('*ProjectRootGuess')
-		call airline#parts#define_function('projectroot', 'ProjectRootGuess')
-		let g:airline_section_c = airline#section#create_right(['file', '', 'projectroot'])
+		let g:airline_section_c='%f < %{ProjectRootGuess()}'
 	endif
 endfunction
-autocmd VimEnter * call AirlineInit()
+autocmd VimEnter * call AirlineAfterInit()
 let g:airline_section_y='[%{&ff}]%{&fenc}'
 let g:airline_section_z='%l/%L %c,%v %P'
 let g:airline#extensions#whitespace#mixed_indent_algo = 1
