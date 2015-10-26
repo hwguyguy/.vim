@@ -1,13 +1,11 @@
 set nocompatible
 
-"source $VIMRUNTIME/vimrc_example.vim
-"source $VIMRUNTIME/delmenu.vim
-"source $VIMRUNTIME/menu.vim
-
 " Encoding {
 
-set enc=utf8 fenc=utf8
-set fencs=utf8,cp936,big5
+set enc=utf8
+set fenc=utf8
+set fencs=ucs-bom,utf8,big5,cp936
+set nobomb
 let $LANG='en_US.UTF-8'
 set langmenu=en_US.UTF-8
 "lang mess en
@@ -136,28 +134,12 @@ endif
 
 set nonu
 "if exists("&relativenumber")
-	"set rnu			" line numbers, :set nu | set relativenumber, set rnu, set nornu
+	"set rnu
 "else
 	"set nu
 "endif
 
 set cursorline
-
-" Set color scheme according to current time of day.
-function! s:HourColor()
-	let hr = str2nr(strftime('%H'))
-	if hr <= 2
-		let i = 0
-	elseif hr <= 18
-		let i = 1
-	else
-		let i = 2
-	endif
-	let nowcolors = 'zenburn wombat256 zenburn'
-	execute 'colorscheme '.split(nowcolors)[i]
-	redraw
-	"echo g:colors_name
-endfunction
 
 if has('gui_running')
 	set guioptions-=b "horizontal scroll bar
@@ -174,8 +156,6 @@ if has('gui_running')
 	"winpos 400 20
 	"set lines=40 columns=140
 	"set linespace=1 "lsp
-	"call s:HourColor()
-	"set cursorline "cul, highlight current line
 else
 	set t_Co=256			"set terminal to 256 color
 	set t_Sf=[3%p1%dm
@@ -258,57 +238,29 @@ endif
 
 " }
 
-" Editing {
+" Buffers {
 
-syntax on
-
-" allow backspacing over everything in insert mode
-set backspace=indent,eol,start
-
-set nolist				"set indentation symbol
-
-"lcs, :digraph for symbol list, e.g. » symbol is ctrl+k then >>
-set listchars=tab:»\ ,
-
-"autocmd Syntax python setlocal list
-
-set mouse+=a				" use mouse in xterm to scroll
-"set scrolloff=4 		" 4 lines bevore and after the current line when scrolling
-
-set showmatch			" showmatch: Show the matching bracket for the last ')'?
-
-set wrap
-
-" disable auto comment
-"autocmd BufNewFile,BufRead * setlocal formatoptions-=r|setlocal formatoptions-=o	"fo
-autocmd BufNewFile,BufRead * setlocal formatoptions-=o	"fo
-
-" show python leading spaces
-"highlight LeadingWhitespace ctermbg=red guibg=red
-"autocmd Syntax python syn match LeadingWhitespace / \+/ contained
-"autocmd Syntax python syn match MixedTabSpaceIndentation /^\s\+/ contains=LeadingWhitespace
-
-" press <tab> to indent in insert mode
-autocmd FileType perl,javascript,php,css setlocal cinkeys+=!<tab>
-autocmd FileType perl,javascript,php,css setlocal indentkeys+=!<tab>
-
-autocmd FileType clojure setlocal iskeyword-=/
-
-"set completeopt=menu,longest,preview
-set completeopt=menu,longest
-set hidden 				" allow switching buffers, which have unsaved changes
+set hidden
 set confirm
 
-autocmd Syntax perl setlocal include=\\<\\(require\\\|do\\)\\>
+" }
 
+" Change current directory automatically {
+
+"set autochdir " auto change CWD to current buffer's directory
+autocmd BufEnter * silent! lcd %:p:h " auto change dir to prevent plugin errors with autochdir
+"autocmd BufEnter * if expand("%:p:h") !~ '^/tmp' | silent! lcd %:p:h | endif
+
+" }
+
+" Editing {
+
+set wrap
+set showmatch
+set mouse+=a
+"set scrolloff=4
+set backspace=indent,eol,start
 "set nrformats+=alpha " make <C-a> and <C-x> works on alpha numeric characters
-
-let g:netrw_liststyle=1
-
-let g:ctab_filetype_maps=1
-autocmd Syntax javascript setlocal cinoptions=
-
-au BufEnter * if &filetype == 'help' | :only | endif
 
 " }
 
@@ -319,18 +271,47 @@ set ffs=unix,dos
 
 " }
 
-" File type detection {
+" File type {
+
+let g:ctab_filetype_maps=1
 
 autocmd BufRead,BufNewFile *.djhtml setlocal filetype=htmldjango
 autocmd BufRead,BufNewFile *.phtml setlocal filetype=phtml.php
 
+au BufEnter * if &filetype == 'help' | :only | endif
+
 " }
 
-" Change current directory automatically {
+" Syntax {
 
-"set autochdir " auto change CWD to current buffer's directory
-autocmd BufEnter * silent! lcd %:p:h " auto change dir to prevent plugin errors with autochdir
-"autocmd BufEnter * if expand("%:p:h") !~ '^/tmp' | silent! lcd %:p:h | endif
+syntax on
+
+set nolist
+
+"lcs, :digraph for symbol list, e.g. » symbol is ctrl+k then >>
+set listchars=tab:»\ ,
+
+"autocmd Syntax python setlocal list
+
+" show python leading spaces
+"highlight LeadingWhitespace ctermbg=red guibg=red
+"autocmd Syntax python syn match LeadingWhitespace / \+/ contained
+"autocmd Syntax python syn match MixedTabSpaceIndentation /^\s\+/ contains=LeadingWhitespace
+
+" disable auto comment
+"autocmd BufNewFile,BufRead * setlocal formatoptions-=r|setlocal formatoptions-=o
+autocmd BufNewFile,BufRead * setlocal formatoptions-=o
+
+autocmd Syntax perl setlocal include=\\<\\(require\\\|do\\)\\>
+
+autocmd FileType clojure setlocal iskeyword-=/
+
+" }
+
+" Completion {
+
+"set completeopt=menu,longest,preview
+set completeopt=menu,longest
 
 " }
 
@@ -352,10 +333,16 @@ augroup END
 
 let g:html_indent_inctags='p'
 
+autocmd Syntax javascript setlocal cinoptions=
+
 augroup ruby_indent
 	autocmd!
 	autocmd FileType ruby,eruby setlocal ts=2 sw=2 sts=2 et ai
 augroup END
+
+" press <tab> to indent in insert mode
+autocmd FileType perl,javascript,php,css setlocal cinkeys+=!<tab>
+autocmd FileType perl,javascript,php,css setlocal indentkeys+=!<tab>
 
 " }
 
@@ -431,6 +418,12 @@ augroup custom_conf
 	autocmd!
 	autocmd BufNewFile,BufRead * call s:LoadCustomConf()
 augroup END
+
+" }
+
+" netrw {
+
+let g:netrw_liststyle=1
 
 " }
 
