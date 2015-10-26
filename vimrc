@@ -118,6 +118,7 @@ Plugin 'cakebaker/scss-syntax.vim'
 Plugin 'benmills/vimux'
 Plugin 'terryma/vim-multiple-cursors'
 Plugin 'osyo-manga/vim-anzu'
+Plugin '907th/vim-auto-save'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -551,6 +552,16 @@ function! Multiple_cursors_after()
 		exe 'NeoCompleteUnlock'
 	endif
 endfunction
+
+" }
+
+" AutoSave {
+
+let g:auto_save = 1
+let g:auto_save_no_updatetime = 1
+let g:auto_save_silent = 1
+let g:auto_save_in_insert_mode = 0
+let g:auto_save_events = ['InsertLeave', 'TextChanged']
 
 " }
 
