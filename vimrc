@@ -325,10 +325,11 @@ set shiftwidth=4		" sw: 4 characters for indenting
 set softtabstop=0
 set noexpandtab
 set cindent
-set cinoptions=(0,u0,U0
+set cinoptions=(0,u0,U0,m1,:0
 set autoindent
 
 augroup fortran_indent
+	autocmd!
 	autocmd FileType fortran setlocal tabstop=6
 	autocmd FileType fortran setlocal shiftwidth=6
 	autocmd FileType fortran setlocal expandtab
@@ -336,11 +337,19 @@ augroup END
 
 let g:html_indent_inctags='p'
 
-autocmd Syntax javascript setlocal cinoptions=
+augroup javascript_indent
+	autocmd!
+	autocmd Syntax javascript setlocal cinoptions=
+augroup END
 
 augroup ruby_indent
 	autocmd!
 	autocmd FileType ruby,eruby setlocal ts=2 sw=2 sts=2 et ai
+augroup END
+
+augroup java_indent
+	autocmd!
+	autocmd FileType java setlocal cinoptions=j1,(0,m1,:0
 augroup END
 
 " press <tab> to indent in insert mode
