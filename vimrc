@@ -41,8 +41,10 @@ else
 		echo ""
 	endif
 	silent execute '!mkdir -p '.vimfiles_dir.'bundle'
-	silent execute '!git clone https://github.com/gmarik/Vundle.vim.git '.vimfiles_dir.'bundle/Vundle.vim'
+	silent execute '!git clone https://github.com/VundleVim/Vundle.vim.git '.vimfiles_dir.'bundle/Vundle.vim'
 endif
+
+filetype off
 
 " set the runtime path to include Vundle and initialize
 execute 'set rtp+='.vimfiles_dir.'bundle/Vundle.vim'
@@ -52,7 +54,7 @@ call vundle#begin(path)
 "call vundle#begin('~/some/path/here')
 
 " let Vundle manage Vundle, required
-Plugin 'gmarik/Vundle.vim'
+Plugin 'VundleVim/Vundle.vim'
 
 Plugin 'altercation/vim-colors-solarized'
 Plugin 'jnurmine/Zenburn'
@@ -90,13 +92,13 @@ Plugin 'bling/vim-airline'
 Plugin 'tpope/vim-surround'
 Plugin 'scrooloose/syntastic'
 Plugin 'scrooloose/nerdcommenter'
-Plugin 'matchit.zip'
+Plugin 'tmhedberg/matchit'
 Plugin 'mattn/emmet-vim'
 Plugin 'scrooloose/nerdtree'
 "Plugin 'Shougo/vimfiler.vim'
 "Plugin 'majutsushi/tagbar'
 Plugin 'lilydjwg/colorizer'
-Plugin 'SmartCase'
+Plugin 'vim-scripts/SmartCase'
 Plugin 'tpope/vim-fugitive'
 "Plugin 'vim-scripts/repeat-motion'
 if (!has('win32') && (has('python') || has('python3')))
@@ -104,12 +106,12 @@ if (!has('win32') && (has('python') || has('python3')))
 endif
 "Plugin 'jmcomets/vim-pony'
 "Plugin '2072/PHP-Indenting-for-VIm'
-Plugin 'vim-ruby/vim-ruby'
+"Plugin 'vim-ruby/vim-ruby'
 Plugin 'tpope/vim-endwise'
-Plugin 'tpope/vim-rails'
+"Plugin 'tpope/vim-rails'
+"Plugin 'slim-template/vim-slim'
 Plugin 'pangloss/vim-javascript'
 Plugin 'tpope/vim-abolish'
-Plugin 'slim-template/vim-slim'
 Plugin 'chrisbra/NrrwRgn'
 Plugin 'chrisbra/csv.vim'
 Plugin 'hail2u/vim-css3-syntax'
@@ -776,9 +778,9 @@ smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
 \: "\<TAB>"
 
 " For snippet_complete marker.
-if has('conceal')
-  set conceallevel=2 concealcursor=i
-endif
+"if has('conceal')
+  "set conceallevel=2 concealcursor=i
+"endif
 
 if has('win32')
 	let g:neosnippet#data_directory = vimfiles_dir.'.cache/neosnippet'
