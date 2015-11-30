@@ -98,26 +98,29 @@ Plugin 'scrooloose/nerdtree'
 "Plugin 'Shougo/vimfiler.vim'
 "Plugin 'majutsushi/tagbar'
 Plugin 'lilydjwg/colorizer'
-Plugin 'vim-scripts/SmartCase'
+"Plugin 'vim-scripts/SmartCase'
+Plugin 'tpope/vim-abolish'
 Plugin 'tpope/vim-fugitive'
 "Plugin 'vim-scripts/repeat-motion'
 if (!has('win32') && (has('python') || has('python3')))
 	Plugin 'klen/python-mode'
 endif
 "Plugin 'jmcomets/vim-pony'
+Plugin 'MaicoTimmerman/Vim-Jinja2-Syntax'
 "Plugin '2072/PHP-Indenting-for-VIm'
 "Plugin 'vim-ruby/vim-ruby'
 Plugin 'tpope/vim-endwise'
 "Plugin 'tpope/vim-rails'
 "Plugin 'slim-template/vim-slim'
 Plugin 'pangloss/vim-javascript'
-Plugin 'tpope/vim-abolish'
 Plugin 'chrisbra/NrrwRgn'
 Plugin 'chrisbra/csv.vim'
 Plugin 'hail2u/vim-css3-syntax'
 Plugin 'cakebaker/scss-syntax.vim'
 "Plugin 'groenewege/vim-less'
-Plugin 'benmills/vimux'
+if !has('win32')
+	Plugin 'benmills/vimux'
+endif
 Plugin 'terryma/vim-multiple-cursors'
 Plugin 'osyo-manga/vim-anzu'
 Plugin '907th/vim-auto-save'
@@ -278,7 +281,7 @@ set ffs=unix,dos
 
 let g:ctab_filetype_maps=1
 
-autocmd BufRead,BufNewFile *.djhtml setlocal filetype=htmldjango
+autocmd BufRead,BufNewFile *.djhtml,*.peb setlocal filetype=jinja
 autocmd BufRead,BufNewFile *.phtml setlocal filetype=phtml.php
 
 au BufEnter * if &filetype == 'help' | :only | endif
@@ -623,8 +626,6 @@ inoremap <M-space> <esc>
 cnoremap <C-g> <C-c>
 vnoremap <C-g> <esc>
 vnoremap <M-space> <esc>
-nnoremap <M-x> :
-inoremap <M-x> <C-o>:
 
 inoremap <C-e> <C-o>A
 inoremap <C-f> <C-o>l
@@ -651,6 +652,9 @@ nnoremap <Leader>fb :Unite -no-split -start-insert file buffer<cr>
 nnoremap <Leader>fd :CtrlP<cr>
 nnoremap <Leader>fp :Unite -no-split -start-insert file_rec:!<cr>
 nnoremap <Leader>y :Unite history/yank<cr>
+nnoremap <Leader>x :Unite -no-split -start-insert command<cr>
+nnoremap <M-x> :Unite -no-split -start-insert command<cr>
+inoremap <M-x> <C-o>:Unite -no-split -start-insert command<cr>
 
 nnoremap <silent> + :let @/ .= '\\|\<'.expand('<cword>').'\>'<cr>
 
