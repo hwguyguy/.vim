@@ -202,12 +202,12 @@ let g:airline_mode_map = {
 		\ }
 let g:airline_left_sep=''
 let g:airline_right_sep=''
-function! AirlineAfterInit()
+function! s:AirlineAfterInit()
 	if exists('g:loaded_airline') && g:loaded_airline && exists('*ProjectRootGuess')
 		let g:airline_section_c='%f < %{ProjectRootGuess()}'
 	endif
 endfunction
-autocmd VimEnter * call AirlineAfterInit()
+autocmd VimEnter * call s:AirlineAfterInit()
 let g:airline_section_y='[%{&ff}]%{&fenc}'
 let g:airline_section_z='%l/%L %c,%v %P'
 let g:airline#extensions#whitespace#mixed_indent_algo = 1
@@ -518,6 +518,22 @@ let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclu
 
 if has('python')
 	let g:pymode_lint_ignore="E302,E501,E265"
+
+	let g:pymode_options = 0
+
+	function! s:PymodeOptions()
+		setlocal complete+=t
+		setlocal formatoptions-=t
+		setlocal nowrap
+		setlocal textwidth=79
+		setlocal commentstring=#%s
+		setlocal define=^\s*\\(def\\\\|class\\)
+	endfunction
+
+	augroup pymode_options
+		autocmd!
+		autocmd FileType python call s:PymodeOptions()
+	augroup END
 endif
 
 " }
@@ -547,6 +563,8 @@ let g:user_emmet_expandabbr_key = '<C-j>'
 
 " Auto Pairs {
 
+let g:AutoPairsShortcutToggle = ''
+let g:AutoPairsShortcutJump = ''
 let g:AutoPairsShortcutBackInsert = '<M-]>'
 
 " }
@@ -636,6 +654,9 @@ inoremap <M-d> <C-o>de
 inoremap <M-h> <C-w>
 inoremap <M-BS> <C-w>
 inoremap <F12> <esc>"=strftime("%c")<CR>p
+imap <M-n> <C-n>
+imap <M-p> <C-p>
+imap </ </<C-x><C-o>
 
 nnoremap <M-;> :call NERDComment(0, 'toggle')<cr>
 vnoremap <M-;> :call NERDComment(0, 'toggle')<cr>
@@ -657,8 +678,6 @@ nnoremap <M-x> :Unite -no-split -start-insert command<cr>
 inoremap <M-x> <C-o>:Unite -no-split -start-insert command<cr>
 
 nnoremap <silent> + :let @/ .= '\\|\<'.expand('<cword>').'\>'<cr>
-
-imap </ </<C-x><C-o>
 
 " Search for selected text, forwards or backwards.
 vnoremap <silent> * :<C-U>
