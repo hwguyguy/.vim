@@ -204,7 +204,7 @@ let g:airline_left_sep=''
 let g:airline_right_sep=''
 function! s:AirlineAfterInit()
 	if exists('g:loaded_airline') && g:loaded_airline && exists('*ProjectRootGuess')
-		let g:airline_section_c='%f < %{ProjectRootGuess()}'
+		let g:airline_section_c='%f%m < %{ProjectRootGuess()}'
 	endif
 endfunction
 autocmd VimEnter * call s:AirlineAfterInit()
@@ -233,14 +233,14 @@ execute 'set undodir='.vimfiles_dir.'.undo'
 set undofile
 
 " backup files edited from WinSCP
-if (has('win32'))
-	let g:my_save_cache_dir='C:\/app\/WinSCP\/cache\/scp[0-9]*\/'
-	let g:my_save_bak_dir='C:\/app\/WinSCP\/bak\/'
-	augroup my_save
-		autocmd!
-		autocmd BufWritePost *.php,*.phtml,*.js,*.css,*.csv call MySave()
-	augroup END
-endif
+"if (has('win32'))
+"	let g:my_save_cache_dir='C:\/app\/WinSCP\/cache\/scp[0-9]*\/'
+"	let g:my_save_bak_dir='C:\/app\/WinSCP\/bak\/'
+"	augroup my_save
+"		autocmd!
+"		autocmd BufWritePost *.php,*.phtml,*.js,*.css,*.csv call MySave()
+"	augroup END
+"endif
 
 " }
 
