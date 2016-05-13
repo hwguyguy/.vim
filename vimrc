@@ -268,6 +268,7 @@ set mouse+=a
 "set scrolloff=4
 set backspace=indent,eol,start
 "set nrformats+=alpha " make <C-a> and <C-x> works on alpha numeric characters
+set nrformats-=octal
 
 " }
 
