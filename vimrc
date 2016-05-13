@@ -228,9 +228,9 @@ set nobackup		" DON'T keep a backup file
 set nowritebackup
 "set backupdir=$VIM/bak
 
-set viminfo=
+let &viminfo="'50,<0,s0,h,n" . vimfiles_dir . "/.viminfo"
 
-execute 'set undodir='.vimfiles_dir.'.undo'
+let &undodir=vimfiles_dir.'.undo'
 set undofile
 
 " backup files edited from WinSCP
