@@ -673,7 +673,7 @@ nnoremap <Leader>bb :Unite -no-split -start-insert buffer<cr>
 nnoremap <Leader>ff :Unite -no-split -start-insert file<cr>
 nnoremap <Leader>fb :Unite -no-split -start-insert file buffer<cr>
 nnoremap <Leader>fd :CtrlP<cr>
-nnoremap <Leader>fp :Unite -no-split -start-insert file_rec:!<cr>
+nnoremap <Leader>fp :UniteWithProjectDir -no-split -start-insert file_rec:!<cr>
 nnoremap <Leader>y :Unite history/yank<cr>
 nnoremap <Leader>x :Unite -no-split -start-insert command<cr>
 nnoremap <M-x> :Unite -no-split -start-insert command<cr>
