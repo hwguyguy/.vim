@@ -56,23 +56,6 @@ call vundle#begin(path)
 " let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
 
-Plugin 'altercation/vim-colors-solarized'
-Plugin 'jnurmine/Zenburn'
-Plugin 'tomasr/molokai'
-"Plugin 'chriskempson/tomorrow-theme', {'rtp': 'vim'}
-"Plugin 'noahfrederick/vim-hemisu'
-"Plugin 'vim-scripts/earendel'
-"Plugin 'candycode.vim'
-"Plugin 'cdaddr/gentooish.vim'
-"Plugin 'endel/vim-github-colorscheme'
-"Plugin 'twerth/ir_black'
-"Plugin 'jpo/vim-railscasts-theme'
-"Plugin 'nanotech/jellybeans.vim'
-"Plugin 'vim-scripts/peaksea'
-"Plugin 'vim-scripts/proton'
-"Plugin 'vim-scripts/pyte'
-"Plugin 'vim-scripts/xoria256.vim'
-
 Plugin 'bkad/CamelCaseMotion'
 Plugin 'Lokaltog/vim-easymotion'
 Plugin 'Shougo/unite.vim'
@@ -94,7 +77,6 @@ Plugin 'tpope/vim-surround'
 Plugin 'scrooloose/syntastic'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'tmhedberg/matchit'
-Plugin 'mattn/emmet-vim'
 Plugin 'scrooloose/nerdtree'
 "Plugin 'Shougo/vimfiler.vim'
 "Plugin 'majutsushi/tagbar'
@@ -111,22 +93,39 @@ Plugin 'terryma/vim-multiple-cursors'
 Plugin 'osyo-manga/vim-anzu'
 Plugin '907th/vim-auto-save'
 
-if (!has('win32') && (has('python') || has('python3')))
-	Plugin 'klen/python-mode'
-endif
-"Plugin 'jmcomets/vim-pony'
-Plugin 'MaicoTimmerman/Vim-Jinja2-Syntax'
-"Plugin '2072/PHP-Indenting-for-VIm'
+"Plugin 'fatih/vim-go'
 "Plugin 'vim-ruby/vim-ruby'
-Plugin 'tpope/vim-endwise'
+"Plugin 'tpope/vim-endwise'
 "Plugin 'tpope/vim-rails'
+"if (!has('win32') && (has('python') || has('python3')))
+	"Plugin 'klen/python-mode'
+"endif
+"Plugin 'jmcomets/vim-pony'
+"Plugin 'MaicoTimmerman/Vim-Jinja2-Syntax'
+"Plugin '2072/PHP-Indenting-for-VIm'
 "Plugin 'slim-template/vim-slim'
-Plugin 'pangloss/vim-javascript'
-Plugin 'chrisbra/csv.vim'
-Plugin 'hail2u/vim-css3-syntax'
-Plugin 'cakebaker/scss-syntax.vim'
+"Plugin 'pangloss/vim-javascript'
+"Plugin 'mattn/emmet-vim'
+"Plugin 'hail2u/vim-css3-syntax'
+"Plugin 'cakebaker/scss-syntax.vim'
 "Plugin 'groenewege/vim-less'
-Plugin 'fatih/vim-go'
+"Plugin 'nginx/nginx', {'rtp': 'contrib/vim'}
+Plugin 'chrisbra/csv.vim'
+
+"Plugin 'altercation/vim-colors-solarized'
+"Plugin 'jnurmine/Zenburn'
+"Plugin 'tomasr/molokai'
+"Plugin 'chriskempson/tomorrow-theme', {'rtp': 'vim'}
+"Plugin 'noahfrederick/vim-hemisu'
+"Plugin 'vim-scripts/earendel'
+"Plugin 'candycode.vim'
+"Plugin 'twerth/ir_black'
+"Plugin 'jpo/vim-railscasts-theme'
+"Plugin 'nanotech/jellybeans.vim'
+"Plugin 'vim-scripts/peaksea'
+"Plugin 'vim-scripts/proton'
+"Plugin 'vim-scripts/pyte'
+"Plugin 'vim-scripts/xoria256.vim'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -285,7 +284,7 @@ set ffs=unix,dos
 
 let g:ctab_filetype_maps=1
 
-autocmd BufRead,BufNewFile *.djhtml,*.peb setlocal filetype=jinja
+"autocmd BufRead,BufNewFile *.djhtml,*.peb setlocal filetype=jinja
 autocmd BufRead,BufNewFile *.phtml setlocal filetype=phtml.php
 
 au BufEnter * if &filetype == 'help' | :only | endif
