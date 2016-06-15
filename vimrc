@@ -103,6 +103,14 @@ Plugin 'lilydjwg/colorizer'
 Plugin 'tpope/vim-abolish'
 Plugin 'tpope/vim-fugitive'
 "Plugin 'vim-scripts/repeat-motion'
+Plugin 'chrisbra/NrrwRgn'
+if !has('win32')
+	Plugin 'benmills/vimux'
+endif
+Plugin 'terryma/vim-multiple-cursors'
+Plugin 'osyo-manga/vim-anzu'
+Plugin '907th/vim-auto-save'
+
 if (!has('win32') && (has('python') || has('python3')))
 	Plugin 'klen/python-mode'
 endif
@@ -114,17 +122,11 @@ Plugin 'tpope/vim-endwise'
 "Plugin 'tpope/vim-rails'
 "Plugin 'slim-template/vim-slim'
 Plugin 'pangloss/vim-javascript'
-Plugin 'chrisbra/NrrwRgn'
 Plugin 'chrisbra/csv.vim'
 Plugin 'hail2u/vim-css3-syntax'
 Plugin 'cakebaker/scss-syntax.vim'
 "Plugin 'groenewege/vim-less'
-if !has('win32')
-	Plugin 'benmills/vimux'
-endif
-Plugin 'terryma/vim-multiple-cursors'
-Plugin 'osyo-manga/vim-anzu'
-Plugin '907th/vim-auto-save'
+Plugin 'fatih/vim-go'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
