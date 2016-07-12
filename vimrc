@@ -375,10 +375,8 @@ set smartcase			" but don't ignore it, when search string contains uppercase let
 
 " Folding {
 
-set foldenable
+set nofoldenable
 set foldnestmax=4
-autocmd Syntax c,cpp,java,perl,javascript setlocal foldmethod=syntax
-autocmd Syntax c,cpp,java,perl,javascript normal zR
 set foldlevelstart=4
 "set foldmarker=
 let javascript_fold=1
