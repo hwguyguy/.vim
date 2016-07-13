@@ -343,11 +343,6 @@ augroup END
 
 let g:html_indent_inctags='p'
 
-augroup javascript_indent
-	autocmd!
-	autocmd Syntax javascript setlocal cinoptions=
-augroup END
-
 augroup ruby_indent
 	autocmd!
 	autocmd FileType ruby,eruby setlocal ts=2 sw=2 sts=2 et ai
