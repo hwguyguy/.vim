@@ -104,11 +104,11 @@ Plugin '907th/vim-auto-save'
 "Plugin 'MaicoTimmerman/Vim-Jinja2-Syntax'
 "Plugin '2072/PHP-Indenting-for-VIm'
 "Plugin 'slim-template/vim-slim'
-"Plugin 'pangloss/vim-javascript'
 "Plugin 'mattn/emmet-vim'
+"Plugin 'pangloss/vim-javascript'
 "Plugin 'hail2u/vim-css3-syntax'
 "Plugin 'cakebaker/scss-syntax.vim'
-"Plugin 'groenewege/vim-less'
+"Plugin 'mxw/vim-jsx'
 "Plugin 'nginx/nginx', {'rtp': 'contrib/vim'}
 Plugin 'chrisbra/csv.vim'
 
