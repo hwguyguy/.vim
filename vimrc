@@ -605,8 +605,10 @@ function! CommandCabbr(abbreviation, expansion)
 endfunction
 command! -nargs=+ CommandCabbr call CommandCabbr(<f-args>)
 
-"command Rc :e $HOME/.vim/vimrc
-"CommandCabbr rc Rc
+command Rc :e $HOME/.vim/vimrc
+CommandCabbr rc Rc
+command Rco :e $HOME/.vim/vimrc.override
+CommandCabbr rco Rco
 
 " }
 
@@ -702,6 +704,9 @@ map <Leader>r <Plug>(easymotion-repeat)
 
 nmap n <Plug>(anzu-n-with-echo)
 nmap N <Plug>(anzu-N-with-echo)
+
+set <M-;>=;
+set <M-x>=x
 
 " }
 
