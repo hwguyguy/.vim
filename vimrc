@@ -600,9 +600,9 @@ function! CommandCabbr(abbreviation, expansion)
 endfunction
 command! -nargs=+ CommandCabbr call CommandCabbr(<f-args>)
 
-command Rc :e $HOME/.vim/vimrc
+execute 'command Rc :e '.vimfiles_dir.'vimrc'
 CommandCabbr rc Rc
-command Rco :e $HOME/.vim/vimrc.override
+execute 'command Rco :e '.vimfiles_dir.'vimrc.override'
 CommandCabbr rco Rco
 
 " }
@@ -654,7 +654,7 @@ inoremap <M-BS> <C-w>
 inoremap <F12> <esc>"=strftime("%c")<CR>p
 imap <M-n> <C-n>
 imap <M-p> <C-p>
-imap </ </<C-x><C-o>
+"imap </ </<C-x><C-o>
 
 nnoremap <M-;> :call NERDComment(0, 'toggle')<cr>
 vnoremap <M-;> :call NERDComment(0, 'toggle')<cr>
