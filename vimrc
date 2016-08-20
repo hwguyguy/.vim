@@ -315,6 +315,11 @@ autocmd Syntax perl setlocal include=\\<\\(require\\\|do\\)\\>
 
 autocmd FileType clojure setlocal iskeyword-=/
 
+augroup nginx_syntax
+	autocmd!
+	autocmd FileType nginx setlocal iskeyword-=. iskeyword-=/ iskeyword-=:
+augroup END
+
 " }
 
 " Completion {
