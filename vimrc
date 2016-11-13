@@ -676,7 +676,7 @@ nnoremap <Leader>' :call NERDComment(0, 'invert')<cr>
 vnoremap <Leader>' :call NERDComment(0, 'invert')<cr>
 
 nnoremap <Leader>bb :Unite -no-split -start-insert buffer<cr>
-nnoremap <Leader>ff :Unite -no-split -start-insert file<cr>
+nnoremap <Leader>ff :Unite -no-split -start-insert file file/new<cr>
 nnoremap <Leader>fb :Unite -no-split -start-insert file buffer<cr>
 nnoremap <Leader>fd :CtrlP<cr>
 nnoremap <Leader>fp :UniteWithProjectDir -no-split -start-insert file_rec:!<cr>
