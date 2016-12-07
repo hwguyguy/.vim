@@ -824,6 +824,8 @@ smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
   "set conceallevel=2 concealcursor=i
 "endif
 
+let g:neosnippet#snippets_directory = vimfiles_dir.'snippets'
+
 if has('win32')
 	let g:neosnippet#data_directory = vimfiles_dir.'.cache/neosnippet'
 endif
