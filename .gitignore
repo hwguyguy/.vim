@@ -1,6 +1,8 @@
 /.*
 !/.gitignore
-/bundle
+/autoload/plug.vim
+/plugged
+/vimrc.plugins
 /vimrc.override
 /eclim
 /plugin/eclim.vim

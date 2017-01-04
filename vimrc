@@ -27,113 +27,117 @@ endif
 
 " }
 
-" Vundle {
+" vim-plug {
 
-let vundle_readme=expand(vimfiles_dir.'bundle/Vundle.vim/README.md')
-if filereadable(vundle_readme)
-	let has_vundle=1
+let vim_plug_location=expand(vimfiles_dir.'autoload/plug.vim')
+if filereadable(vim_plug_location)
+	let has_vim_plug = 1
 else
-	let has_vundle=0
+	let has_vim_plug = 0
 	if has('win32')
-		echo "Click OK to install Vundle."
+		echo "Click OK to install vim-plug."
 	else
-		echo "Installing Vundle..."
+		echo "Installing vim-plug..."
 		echo ""
 	endif
-	silent execute '!mkdir -p '.vimfiles_dir.'bundle'
-	silent execute '!git clone https://github.com/VundleVim/Vundle.vim.git '.vimfiles_dir.'bundle/Vundle.vim'
+	silent execute '!mkdir -p '.vimfiles_dir.'autoload'
+	silent execute '!mkdir -p '.vimfiles_dir.'plugged'
+	silent execute '!curl -fLo '.vim_plug_location.' --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
 endif
 
-filetype off
+" https://github.com/junegunn/vim-plug/issues/469#issuecomment-226965736
+function! UnPlug(repo)
+	let repo = substitute(a:repo, '[\/]\+$', '', '')
+	let name = fnamemodify(repo, ':t:s?\.git$??')
+	call remove(g:plugs, name)
+	call remove(g:plugs_order, index(g:plugs_order, name))
+endfunction
+command! -nargs=1 -bar UnPlug call UnPlug(<args>)
 
-" set the runtime path to include Vundle and initialize
-execute 'set rtp+='.vimfiles_dir.'bundle/Vundle.vim'
-let path=vimfiles_dir.'bundle'
-call vundle#begin(path)
-" alternatively, pass a path where Vundle should install plugins
-"call vundle#begin('~/some/path/here')
+call plug#begin(vimfiles_dir.'plugged')
 
-" let Vundle manage Vundle, required
-Plugin 'VundleVim/Vundle.vim'
-
-Plugin 'bkad/CamelCaseMotion'
-Plugin 'Lokaltog/vim-easymotion'
-Plugin 'Shougo/unite.vim'
+Plug 'bkad/CamelCaseMotion'
+Plug 'Lokaltog/vim-easymotion'
+Plug 'Shougo/unite.vim'
 if (has('lua') && (v:version > 703 || v:version == 703 && has('patch885')))
-	Plugin 'Shougo/neocomplete.vim'
-	Plugin 'Shougo/neosnippet'
-	Plugin 'Shougo/neosnippet-snippets'
+	Plug 'Shougo/neocomplete.vim'
+	Plug 'Shougo/neosnippet'
+	Plug 'Shougo/neosnippet-snippets'
 endif
-Plugin 'kien/ctrlp.vim'
-Plugin 'jlanzarotta/bufexplorer'
-Plugin 'mbbill/undotree'
-Plugin 'sickill/vim-pasta'
-Plugin 'godlygeek/tabular'
-Plugin 'jiangmiao/auto-pairs'
-Plugin 'dbakker/vim-projectroot'
-Plugin 'vim-airline/vim-airline'
-Plugin 'vim-airline/vim-airline-themes'
-Plugin 'tpope/vim-surround'
-Plugin 'scrooloose/syntastic'
-Plugin 'scrooloose/nerdcommenter'
-Plugin 'tmhedberg/matchit'
-Plugin 'scrooloose/nerdtree'
-"Plugin 'Shougo/vimfiler.vim'
-"Plugin 'majutsushi/tagbar'
-Plugin 'lilydjwg/colorizer'
-"Plugin 'vim-scripts/SmartCase'
-Plugin 'tpope/vim-abolish'
-Plugin 'tpope/vim-fugitive'
-"Plugin 'vim-scripts/repeat-motion'
-Plugin 'chrisbra/NrrwRgn'
+Plug 'kien/ctrlp.vim'
+Plug 'jlanzarotta/bufexplorer'
+Plug 'mbbill/undotree'
+Plug 'sickill/vim-pasta'
+Plug 'godlygeek/tabular'
+Plug 'jiangmiao/auto-pairs'
+Plug 'dbakker/vim-projectroot'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'tpope/vim-surround'
+Plug 'scrooloose/syntastic'
+Plug 'scrooloose/nerdcommenter'
+Plug 'tmhedberg/matchit'
+Plug 'scrooloose/nerdtree'
+"Plug 'Shougo/vimfiler.vim'
+"Plug 'majutsushi/tagbar'
+Plug 'lilydjwg/colorizer'
+"Plug 'vim-scripts/SmartCase'
+Plug 'tpope/vim-abolish'
+Plug 'tpope/vim-fugitive'
+"Plug 'vim-scripts/repeat-motion'
+Plug 'chrisbra/NrrwRgn'
 if !has('win32')
-	Plugin 'benmills/vimux'
+	Plug 'benmills/vimux'
 endif
-Plugin 'terryma/vim-multiple-cursors'
-Plugin 'osyo-manga/vim-anzu'
-Plugin '907th/vim-auto-save'
+Plug 'terryma/vim-multiple-cursors'
+Plug 'osyo-manga/vim-anzu'
+Plug '907th/vim-auto-save'
 
-"Plugin 'fatih/vim-go'
-"Plugin 'vim-ruby/vim-ruby'
-"Plugin 'tpope/vim-endwise'
-"Plugin 'tpope/vim-rails'
+"Plug 'fatih/vim-go'
+"Plug 'vim-ruby/vim-ruby'
+"Plug 'tpope/vim-endwise'
+"Plug 'tpope/vim-rails'
 "if (!has('win32') && (has('python') || has('python3')))
-	"Plugin 'klen/python-mode'
+	"Plug 'klen/python-mode'
 "endif
-"Plugin 'jmcomets/vim-pony'
-"Plugin 'MaicoTimmerman/Vim-Jinja2-Syntax'
-"Plugin '2072/PHP-Indenting-for-VIm'
-"Plugin 'slim-template/vim-slim'
-"Plugin 'mattn/emmet-vim'
-"Plugin 'pangloss/vim-javascript'
-"Plugin 'hail2u/vim-css3-syntax'
-"Plugin 'cakebaker/scss-syntax.vim'
-"Plugin 'mxw/vim-jsx'
-"Plugin 'nginx/nginx', {'rtp': 'contrib/vim'}
-Plugin 'chrisbra/csv.vim'
+"Plug 'jmcomets/vim-pony'
+"Plug 'MaicoTimmerman/Vim-Jinja2-Syntax'
+"Plug '2072/PHP-Indenting-for-VIm'
+"Plug 'slim-template/vim-slim'
+"Plug 'mattn/emmet-vim'
+"Plug 'pangloss/vim-javascript'
+"Plug 'hail2u/vim-css3-syntax'
+"Plug 'cakebaker/scss-syntax.vim'
+"Plug 'mxw/vim-jsx'
+"Plug 'nginx/nginx', {'rtp': 'contrib/vim'}
+Plug 'chrisbra/csv.vim'
 
-"Plugin 'altercation/vim-colors-solarized'
-"Plugin 'jnurmine/Zenburn'
-"Plugin 'tomasr/molokai'
-"Plugin 'chriskempson/tomorrow-theme', {'rtp': 'vim'}
-"Plugin 'noahfrederick/vim-hemisu'
-"Plugin 'vim-scripts/earendel'
-"Plugin 'candycode.vim'
-"Plugin 'twerth/ir_black'
-"Plugin 'jpo/vim-railscasts-theme'
-"Plugin 'nanotech/jellybeans.vim'
-"Plugin 'vim-scripts/peaksea'
-"Plugin 'vim-scripts/proton'
-"Plugin 'vim-scripts/pyte'
-"Plugin 'vim-scripts/xoria256.vim'
+"Plug 'altercation/vim-colors-solarized'
+"Plug 'jnurmine/Zenburn'
+"Plug 'tomasr/molokai'
+"Plug 'chriskempson/tomorrow-theme', {'rtp': 'vim'}
+"Plug 'noahfrederick/vim-hemisu'
+"Plug 'vim-scripts/earendel'
+"Plug 'candycode.vim'
+"Plug 'twerth/ir_black'
+"Plug 'jpo/vim-railscasts-theme'
+"Plug 'nanotech/jellybeans.vim'
+"Plug 'vim-scripts/peaksea'
+"Plug 'vim-scripts/proton'
+"Plug 'vim-scripts/pyte'
+"Plug 'vim-scripts/xoria256.vim'
 
-" All of your Plugins must be added before the following line
-call vundle#end()            " required
-filetype plugin indent on    " required
+let vimrc_plugins = vimfiles_dir.'vimrc.plugins'
 
-if has_vundle == 0
+if filereadable(vimrc_plugins)
+	execute 'source '.vimrc_plugins
+endif
+
+call plug#end()
+
+if has_vim_plug == 0
 	echo "Installing Plugins, please ignore key map error messages"
-	:PluginInstall
+	:PlugInstall
 endif
 
 " }
@@ -612,6 +616,8 @@ command! -nargs=+ CommandCabbr call CommandCabbr(<f-args>)
 
 execute 'command Rc :e '.vimfiles_dir.'vimrc'
 CommandCabbr rc Rc
+execute 'command Rcp :e '.vimfiles_dir.'vimrc.plugins'
+CommandCabbr rcp Rcp
 execute 'command Rco :e '.vimfiles_dir.'vimrc.override'
 CommandCabbr rco Rco
 
