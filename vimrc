@@ -516,6 +516,12 @@ if has('win32')
 	let g:unite_data_directory = vimfiles_dir.'/.cache/unite'
 endif
 
+call unite#custom#profile('default', 'context', {
+			\   'prompt': '❯ ',
+			\   'start_insert': 1,
+			\   'winheight': 10,
+			\   'direction': 'botright',
+			\ })
 call unite#filters#matcher_default#use(['matcher_fuzzy'])
 call unite#filters#sorter_default#use(['sorter_rank'])
 let g:unite_source_history_yank_enable = 1
@@ -535,7 +541,7 @@ let g:ctrlp_prompt_mappings = {
   \ 'PrtHistory(-1)':       ['<m-n>'],
   \ 'PrtHistory(1)':        ['<m-p>'],
   \ }
-let g:ctrlp_match_window = 'top,order:ttb,min:1,max:10,results:10'
+let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:10,results:10'
 let g:ctrlp_root_markers = ['.ctrlp']
 let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard']
 
@@ -723,12 +729,12 @@ vnoremap <Leader>' :call NERDComment(0, 'invert')<cr>
 
 nnoremap <Leader>fd :CtrlP<cr>
 
-nnoremap <Leader>bb :Unite -no-split -start-insert buffer<cr>
-nnoremap <Leader>ff :Unite -no-split -start-insert file file/new<cr>
-nnoremap <Leader>fp :UniteWithProjectDir -no-split -start-insert file_rec:!<cr>
+nnoremap <Leader>bb :Unite buffer<cr>
+nnoremap <Leader>ff :Unite file file/new<cr>
+nnoremap <Leader>fp :UniteWithProjectDir file_rec:!<cr>
 nnoremap <Leader>y :Unite history/yank<cr>
-nnoremap <M-x> :Unite -no-split -start-insert command<cr>
-inoremap <M-x> <C-o>:Unite -no-split -start-insert command<cr>
+nnoremap <M-x> :Unite command<cr>
+inoremap <M-x> <C-o>:Unite command<cr>
 
 if has_key(g:plugs, 'fzf.vim')
 	nnoremap <Leader>bb :Buffers<cr>
