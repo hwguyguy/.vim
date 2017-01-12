@@ -58,58 +58,63 @@ call plug#begin(vimfiles_dir.'plugged')
 
 Plug 'bkad/CamelCaseMotion'
 Plug 'Lokaltog/vim-easymotion'
-Plug 'Shougo/unite.vim'
+Plug 'mbbill/undotree'
+Plug 'sickill/vim-pasta'
+Plug 'godlygeek/tabular'
+Plug 'jiangmiao/auto-pairs'
+Plug 'tpope/vim-surround'
+Plug 'tmhedberg/matchit'
+Plug 'scrooloose/nerdcommenter'
+Plug 'tpope/vim-abolish'
+"Plug 'vim-scripts/repeat-motion'
+Plug 'chrisbra/NrrwRgn'
+"Plug 'Valloric/YouCompleteMe', {'do': './install.py'}
 if (has('lua') && (v:version > 703 || v:version == 703 && has('patch885')))
 	Plug 'Shougo/neocomplete.vim'
 	Plug 'Shougo/neosnippet'
 	Plug 'Shougo/neosnippet-snippets'
 endif
-Plug 'kien/ctrlp.vim'
-Plug 'jlanzarotta/bufexplorer'
-Plug 'mbbill/undotree'
-Plug 'sickill/vim-pasta'
-Plug 'godlygeek/tabular'
-Plug 'jiangmiao/auto-pairs'
+Plug 'terryma/vim-multiple-cursors'
 Plug 'dbakker/vim-projectroot'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-Plug 'tpope/vim-surround'
-Plug 'scrooloose/syntastic'
-Plug 'scrooloose/nerdcommenter'
-Plug 'tmhedberg/matchit'
+Plug 'jlanzarotta/bufexplorer'
 Plug 'scrooloose/nerdtree'
 "Plug 'Shougo/vimfiler.vim'
+Plug 'Shougo/unite.vim'
+if !has('win32')
+	Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' }
+	Plug 'junegunn/fzf.vim'
+endif
+Plug 'kien/ctrlp.vim'
 "Plug 'majutsushi/tagbar'
+Plug 'scrooloose/syntastic'
 Plug 'lilydjwg/colorizer'
-"Plug 'vim-scripts/SmartCase'
-Plug 'tpope/vim-abolish'
 Plug 'tpope/vim-fugitive'
-"Plug 'vim-scripts/repeat-motion'
-Plug 'chrisbra/NrrwRgn'
+Plug 'osyo-manga/vim-anzu'
+Plug '907th/vim-auto-save'
 if !has('win32')
 	Plug 'benmills/vimux'
 endif
-Plug 'terryma/vim-multiple-cursors'
-Plug 'osyo-manga/vim-anzu'
-Plug '907th/vim-auto-save'
 
-"Plug 'fatih/vim-go'
+"Plug 'pangloss/vim-javascript'
+"Plug 'mxw/vim-jsx'
+"Plug 'mattn/emmet-vim'
+"Plug 'hail2u/vim-css3-syntax'
+"Plug 'cakebaker/scss-syntax.vim'
 "Plug 'vim-ruby/vim-ruby'
 "Plug 'tpope/vim-endwise'
 "Plug 'tpope/vim-rails'
+"Plug 'nginx/nginx', {'rtp': 'contrib/vim'}
 "if (!has('win32') && (has('python') || has('python3')))
 	"Plug 'klen/python-mode'
 "endif
 "Plug 'jmcomets/vim-pony'
 "Plug 'MaicoTimmerman/Vim-Jinja2-Syntax'
 "Plug '2072/PHP-Indenting-for-VIm'
-"Plug 'slim-template/vim-slim'
-"Plug 'mattn/emmet-vim'
-"Plug 'pangloss/vim-javascript'
-"Plug 'hail2u/vim-css3-syntax'
-"Plug 'cakebaker/scss-syntax.vim'
-"Plug 'mxw/vim-jsx'
-"Plug 'nginx/nginx', {'rtp': 'contrib/vim'}
+"Plug 'fatih/vim-go'
+"Plug 'leafgarland/typescript-vim'
+"Plug 'Quramy/tsuquyomi'
 Plug 'chrisbra/csv.vim'
 
 "Plug 'altercation/vim-colors-solarized'
@@ -452,6 +457,18 @@ let g:netrw_liststyle=1
 
 " }
 
+" YouCompleteMe {
+
+if has_key(g:plugs, 'YouCompleteMe')
+	let g:ycm_auto_trigger = 1
+	if !exists("g:ycm_semantic_triggers")
+		let g:ycm_semantic_triggers = {}
+	endif
+	let g:ycm_semantic_triggers['typescript'] = ['re![a-zA-Z0-9_.]']
+endif
+
+" }
+
 " Taglist {
 
 "let Tlist_JS_Settings = 'javascript;s:string;a:array;o:object;f:function'
@@ -524,30 +541,6 @@ let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclu
 
 " }
 
-" python-mode {
-
-if has('python')
-	let g:pymode_lint_ignore="E302,E501,E265"
-
-	let g:pymode_options = 0
-
-	function! s:PymodeOptions()
-		setlocal complete+=t
-		setlocal formatoptions-=t
-		setlocal nowrap
-		setlocal textwidth=79
-		setlocal commentstring=#%s
-		setlocal define=^\s*\\(def\\\\|class\\)
-	endfunction
-
-	augroup pymode_options
-		autocmd!
-		autocmd FileType python call s:PymodeOptions()
-	augroup END
-endif
-
-" }
-
 " Syntastic {
 
 let g:syntastic_check_on_open=1
@@ -562,12 +555,6 @@ let g:syntastic_mode_map = { "mode": "active",
 " EasyMotion {
 
 let g:EasyMotion_smartcase = 1
-
-" }
-
-" Emmet-vim {
-
-let g:user_emmet_expandabbr_key = '<C-j>'
 
 " }
 
@@ -604,6 +591,59 @@ let g:auto_save_no_updatetime = 1
 let g:auto_save_silent = 1
 let g:auto_save_in_insert_mode = 0
 let g:auto_save_events = ['InsertLeave', 'TextChanged']
+
+" }
+
+" vim-jsx {
+
+if has_key(g:plugs, 'vim-jsx')
+	let g:jsx_ext_required = 0
+endif
+
+" }
+
+" Emmet-vim {
+
+let g:user_emmet_expandabbr_key = '<C-j>'
+
+" }
+
+" python-mode {
+
+if has_key(g:plugs, 'python-mode')
+	let g:pymode_lint_ignore="E302,E501,E265"
+
+	let g:pymode_options = 0
+
+	function! s:PymodeOptions()
+		setlocal complete+=t
+		setlocal formatoptions-=t
+		setlocal nowrap
+		setlocal textwidth=79
+		setlocal commentstring=#%s
+		setlocal define=^\s*\\(def\\\\|class\\)
+	endfunction
+
+	augroup pymode_options
+		autocmd!
+		autocmd FileType python call s:PymodeOptions()
+	augroup END
+endif
+
+" }
+
+" tsuquyomi {
+
+if has_key(g:plugs, 'tsuquyomi')
+	let g:tsuquyomi_disable_default_mappings = 1
+	let g:tsuquyomi_shortest_import_path = 1
+	let g:tsuquyomi_single_quote_import = 1
+	autocmd FileType typescript map <buffer> <C-]> <Plug>(TsuquyomiDefinition)
+	autocmd FileType typescript map <buffer> <C-t> <Plug>(TsuquyomiGoBack)
+	autocmd FileType typescript map <buffer> <C-u> <Plug>(TsuquyomiReferences)
+	autocmd FileType typescript nmap <buffer> <C-e> <Plug>(TsuquyomiRenameSymbol)
+	autocmd FileType typescript nmap <buffer> <C-i> <Plug>(TsuquyomiImport)
+endif
 
 " }
 
@@ -681,15 +721,19 @@ vnoremap <Leader>; :call NERDComment(0, 'toggle')<cr>
 nnoremap <Leader>' :call NERDComment(0, 'invert')<cr>
 vnoremap <Leader>' :call NERDComment(0, 'invert')<cr>
 
+nnoremap <Leader>fd :CtrlP<cr>
+
 nnoremap <Leader>bb :Unite -no-split -start-insert buffer<cr>
 nnoremap <Leader>ff :Unite -no-split -start-insert file file/new<cr>
-nnoremap <Leader>fb :Unite -no-split -start-insert file buffer<cr>
-nnoremap <Leader>fd :CtrlP<cr>
 nnoremap <Leader>fp :UniteWithProjectDir -no-split -start-insert file_rec:!<cr>
 nnoremap <Leader>y :Unite history/yank<cr>
-nnoremap <Leader>x :Unite -no-split -start-insert command<cr>
 nnoremap <M-x> :Unite -no-split -start-insert command<cr>
 inoremap <M-x> <C-o>:Unite -no-split -start-insert command<cr>
+
+if has_key(g:plugs, 'fzf.vim')
+	nnoremap <Leader>bb :Buffers<cr>
+	execute 'nnoremap <Leader>fp :Files ' . projectroot#guess() . '<cr>'
+endif
 
 nnoremap <silent> + :let @/ .= '\\|\<'.expand('<cword>').'\>'<cr>
 
