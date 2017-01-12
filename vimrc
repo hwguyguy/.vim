@@ -738,7 +738,7 @@ inoremap <M-x> <C-o>:Unite command<cr>
 
 if has_key(g:plugs, 'fzf.vim')
 	nnoremap <Leader>bb :Buffers<cr>
-	execute 'nnoremap <Leader>fp :Files ' . projectroot#guess() . '<cr>'
+	nnoremap <Leader>fp :ProjectRootExe Files<cr>
 endif
 
 nnoremap <silent> + :let @/ .= '\\|\<'.expand('<cword>').'\>'<cr>
