@@ -78,19 +78,20 @@ Plug 'terryma/vim-multiple-cursors'
 Plug 'dbakker/vim-projectroot'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-Plug 'jlanzarotta/bufexplorer'
-Plug 'scrooloose/nerdtree'
-"Plug 'Shougo/vimfiler.vim'
 Plug 'Shougo/unite.vim'
 if !has('win32')
 	Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' }
 	Plug 'junegunn/fzf.vim'
 endif
 Plug 'kien/ctrlp.vim'
+Plug 'jlanzarotta/bufexplorer'
+Plug 'scrooloose/nerdtree'
+"Plug 'Shougo/vimfiler.vim'
+Plug 'justinmk/vim-gtfo'
 "Plug 'majutsushi/tagbar'
 Plug 'scrooloose/syntastic'
-Plug 'lilydjwg/colorizer'
 Plug 'tpope/vim-fugitive'
+Plug 'lilydjwg/colorizer'
 Plug 'osyo-manga/vim-anzu'
 Plug '907th/vim-auto-save'
 if !has('win32')
@@ -99,6 +100,7 @@ endif
 
 "Plug 'pangloss/vim-javascript'
 "Plug 'mxw/vim-jsx'
+"Plug 'ternjs/tern_for_vim', {'do': 'yarn'}
 "Plug 'mattn/emmet-vim'
 "Plug 'hail2u/vim-css3-syntax'
 "Plug 'cakebaker/scss-syntax.vim'
@@ -454,6 +456,12 @@ augroup END
 " netrw {
 
 let g:netrw_liststyle=1
+
+" }
+
+" NERD Commenter {
+
+let g:NERDDefaultAlign = 'left'
 
 " }
 
