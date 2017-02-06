@@ -1,6 +1,43 @@
+snippet f
+options head
+    function ${1:#:method_name}(${2:#:attribute}) {
+        ${0:TARGET}
+    }
+
+snippet m
+options head
+    ${1:#:method_name}(${2:#:attribute}) {
+        ${0:TARGET}
+    }
+
+snippet m,
+options head
+    ${1:#:method_name}(${2:#:attribute}) {
+        ${0:TARGET}
+    },
+
+snippet a
+options head
+    ${1:#:attribute} => {
+        ${0:TARGET}
+    }
+
+snippet aa
+options head
+    (${1:#:attribute}) => {
+        ${0:TARGET}
+    }
+
+snippet as
+options head
+    async function ${1:#:method_name}(${2:#:attribute}) {
+        ${0:TARGET}
+    }
+
 snippet try
 options head
     try {
         ${0:TARGET}
     } catch (e) {
     }
+
