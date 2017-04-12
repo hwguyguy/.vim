@@ -872,6 +872,8 @@ endif
 
 " Neosnippet {
 
+if has_key(g:plugs, 'neosnippet')
+
 " Plugin key-mappings.
 imap <C-l>     <Plug>(neosnippet_expand_or_jump)
 smap <C-l>     <Plug>(neosnippet_expand_or_jump)
@@ -894,6 +896,8 @@ let g:neosnippet#snippets_directory = vimfiles_dir.'snippets'
 
 if has('win32')
 	let g:neosnippet#data_directory = vimfiles_dir.'.cache/neosnippet'
+endif
+
 endif
 
 " }
