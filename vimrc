@@ -297,6 +297,7 @@ let g:ctab_filetype_maps=1
 
 "autocmd BufRead,BufNewFile *.djhtml,*.peb setlocal filetype=jinja
 autocmd BufRead,BufNewFile *.phtml setlocal filetype=phtml.php
+autocmd BufRead,BufNewFile .babelrc setlocal filetype=json
 
 au BufEnter * if &filetype == 'help' | :only | endif
 
