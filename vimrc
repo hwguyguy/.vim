@@ -74,11 +74,11 @@ if (has('lua') && (v:version > 703 || v:version == 703 && has('patch885')))
 	Plug 'Shougo/neosnippet'
 	Plug 'Shougo/neosnippet-snippets'
 endif
-Plug 'terryma/vim-multiple-cursors'
 Plug 'dbakker/vim-projectroot'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'Shougo/unite.vim'
+Plug 'Shougo/neoyank.vim'
 if !has('win32')
 	Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' }
 	Plug 'junegunn/fzf.vim'
@@ -97,6 +97,7 @@ Plug '907th/vim-auto-save'
 if !has('win32')
 	Plug 'benmills/vimux'
 endif
+"Plug 'terryma/vim-multiple-cursors'
 
 "Plug 'pangloss/vim-javascript'
 "Plug 'mxw/vim-jsx'
