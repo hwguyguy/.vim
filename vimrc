@@ -366,6 +366,11 @@ augroup ruby_indent
 	autocmd FileType ruby,eruby setlocal ts=2 sw=2 sts=2 et ai
 augroup END
 
+augroup javascript_indent
+	autocmd!
+	autocmd FileType javascript setlocal cinoptions=u0,U0,m1,:0
+augroup END
+
 augroup package_json_indent
 	autocmd!
 	autocmd BufRead,BufNewFile,BufEnter package.json setlocal ts=2 sw=2 sts=2 et ai
