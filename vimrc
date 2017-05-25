@@ -71,9 +71,9 @@ Plug 'chrisbra/NrrwRgn'
 "Plug 'Valloric/YouCompleteMe', {'do': './install.py'}
 if (has('lua') && (v:version > 703 || v:version == 703 && has('patch885')))
 	Plug 'Shougo/neocomplete.vim'
-	Plug 'Shougo/neosnippet'
-	Plug 'Shougo/neosnippet-snippets'
 endif
+Plug 'Shougo/neosnippet'
+Plug 'Shougo/neosnippet-snippets'
 Plug 'dbakker/vim-projectroot'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
