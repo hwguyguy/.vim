@@ -75,15 +75,17 @@ endif
 Plug 'Shougo/neosnippet'
 Plug 'Shougo/neosnippet-snippets'
 Plug 'dbakker/vim-projectroot'
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
-Plug 'Shougo/unite.vim'
+if (has('python3'))
+	Plug 'Shougo/denite.nvim'
+else
+	Plug 'Shougo/unite.vim'
+endif
 Plug 'Shougo/neoyank.vim'
 if !has('win32')
 	Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' }
 	Plug 'junegunn/fzf.vim'
 endif
-Plug 'kien/ctrlp.vim'
+"Plug 'kien/ctrlp.vim'
 Plug 'jlanzarotta/bufexplorer'
 Plug 'scrooloose/nerdtree'
 "Plug 'Shougo/vimfiler.vim'
@@ -91,6 +93,8 @@ Plug 'justinmk/vim-gtfo'
 "Plug 'majutsushi/tagbar'
 Plug 'scrooloose/syntastic'
 Plug 'tpope/vim-fugitive'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 Plug 'lilydjwg/colorizer'
 Plug 'osyo-manga/vim-anzu'
 Plug '907th/vim-auto-save'
@@ -138,13 +142,12 @@ endif
 " Appearence {
 
 set nonu
-"if exists("&relativenumber")
-	"set rnu
-"else
-	"set nu
-"endif
-
 set cursorline
+
+" No beep
+set noeb
+set vb
+set t_vb=
 
 if has('gui_running')
 	set guioptions-=b "horizontal scroll bar
@@ -172,6 +175,8 @@ endif
 "	set t_ve+=[?81;0;112c
 "endif
 
+colors wombat256
+
 " }
 
 " Status line / status bar {
@@ -186,6 +191,7 @@ set statusline=%<%{getcwd()}\ %F%h%m%r%h%w%y[%{&ff}]%=\ col:%c%V\ lin:%l\/%L\ %P
 "set statusline=%<%F%h%m%r%h%w%y\ %{&ff}\ %{strftime(\"%c\",getftime(expand(\"%:p\")))}%=\ lin:%l\,%L\ col:%c%V\ pos:%o\ ascii:%b\ %P
 "set statusline=File:\ %m%<%f\%r%h%w\ [%{&ff},%{&fileencoding},%Y]%=\ [ASCII=\%03.3b]\ [Hex=\%02.2B]\ [Pos=%l,%v,%p%%]\ [Total\ Line=%L]
 
+let g:airline_theme='powerlineish'
 let g:airline_mode_map = {
 		\ '__' : '-',
 		\ 'n'  : 'N',
@@ -210,7 +216,6 @@ autocmd VimEnter * call s:AirlineAfterInit()
 let g:airline_section_y='[%{&ff}]%{&fenc}'
 let g:airline_section_z='%l/%L %c,%v %P'
 let g:airline#extensions#whitespace#mixed_indent_algo = 1
-
 let g:airline#extensions#anzu#enabled=0
 
 " }
@@ -510,41 +515,74 @@ endif
 
 " }
 
-" Unite {
+" Denite {
+if has_key(g:plugs, 'denite.nvim')
+	call denite#custom#option('default', 'reversed', 1)
 
-if has('win32')
-	let g:unite_data_directory = vimfiles_dir.'/.cache/unite'
+	call denite#custom#var('file_rec', 'command', ['ag', '--hidden', '--follow', '--nocolor', '--nogroup', '-g', ''])
+
+	call denite#custom#map(
+				\ 'insert',
+				\ '<C-n>',
+				\ '<denite:move_to_next_line>',
+				\ 'noremap'
+				\)
+	call denite#custom#map(
+				\ 'insert',
+				\ '<C-p>',
+				\ '<denite:move_to_previous_line>',
+				\ 'noremap'
+				\)
+	call denite#custom#map(
+				\ 'insert',
+				\ '<C-g>',
+				\ '<denite:leave_mode>',
+				\ 'noremap'
+				\)
 endif
+" }
 
-call unite#custom#profile('default', 'context', {
-			\   'prompt': '❯ ',
-			\   'start_insert': 1,
-			\   'winheight': 10,
-			\   'direction': 'botright',
-			\ })
-call unite#filters#matcher_default#use(['matcher_fuzzy'])
-call unite#filters#sorter_default#use(['sorter_rank'])
-let g:unite_source_history_yank_enable = 1
+" Unite {
+if has_key(g:plugs, 'unite.vim')
+	if has('win32')
+		let g:unite_data_directory = vimfiles_dir.'/.cache/unite'
+	endif
 
+	call unite#custom#profile('default', 'context', {
+				\   'prompt': '❯ ',
+				\   'start_insert': 1,
+				\   'winheight': 10,
+				\   'direction': 'botright',
+				\ })
+	call unite#filters#matcher_default#use(['matcher_fuzzy'])
+	call unite#filters#sorter_default#use(['sorter_rank'])
+	let g:unite_source_history_yank_enable = 1
+endif
+" }
+
+" fzf {
+if has_key(g:plugs, 'fzf.vim')
+	let $FZF_DEFAULT_COMMAND = 'ag --hidden --follow --nocolor --nogroup -g ""'
+endif
 " }
 
 " CtrlP {
+if has_key(g:plugs, 'ctrlp.vim')
+	if has('win32')
+		let g:ctrlp_cache_dir = vimfiles_dir.'/.cache/ctrlp'
+	endif
 
-if has('win32')
-	let g:ctrlp_cache_dir = vimfiles_dir.'/.cache/ctrlp'
+	let g:ctrlp_map = ''
+	let g:ctrlp_prompt_mappings = {
+				\ 'PrtSelectMove("j")':   ['<c-n>', '<down>'],
+				\ 'PrtSelectMove("k")':   ['<c-p>', '<up>'],
+				\ 'PrtHistory(-1)':       ['<m-n>'],
+				\ 'PrtHistory(1)':        ['<m-p>'],
+				\ }
+	let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:10,results:10'
+	let g:ctrlp_root_markers = ['.ctrlp']
+	let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard']
 endif
-
-let g:ctrlp_map = ''
-let g:ctrlp_prompt_mappings = {
-  \ 'PrtSelectMove("j")':   ['<c-n>', '<down>'],
-  \ 'PrtSelectMove("k")':   ['<c-p>', '<up>'],
-  \ 'PrtHistory(-1)':       ['<m-n>'],
-  \ 'PrtHistory(1)':        ['<m-p>'],
-  \ }
-let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:10,results:10'
-let g:ctrlp_root_markers = ['.ctrlp']
-let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard']
-
 " }
 
 " Syntastic {
@@ -727,14 +765,27 @@ vnoremap <Leader>; :call NERDComment(0, 'toggle')<cr>
 nnoremap <Leader>' :call NERDComment(0, 'invert')<cr>
 vnoremap <Leader>' :call NERDComment(0, 'invert')<cr>
 
-nnoremap <Leader>fd :CtrlP<cr>
+if has_key(g:plugs, 'ctrlp.vim')
+	nnoremap <Leader>fd :CtrlP<cr>
+endif
 
-nnoremap <Leader>bb :Unite buffer<cr>
-nnoremap <Leader>ff :Unite file file/new<cr>
-nnoremap <Leader>fp :UniteWithProjectDir file_rec:!<cr>
-nnoremap <Leader>y :Unite history/yank<cr>
-nnoremap <M-x> :Unite command<cr>
-inoremap <M-x> <C-o>:Unite command<cr>
+if has_key(g:plugs, 'unite.vim')
+	nnoremap <Leader>bb :Unite buffer<cr>
+	nnoremap <Leader>ff :Unite file file/new<cr>
+	nnoremap <Leader>fp :UniteWithProjectDir file_rec:!<cr>
+	nnoremap <Leader>y :Unite history/yank<cr>
+	nnoremap <M-x> :Unite command<cr>
+	inoremap <M-x> <C-o>:Unite command<cr>
+endif
+
+if has_key(g:plugs, 'denite.nvim')
+	nnoremap <Leader>bb :Denite buffer<cr>
+	nnoremap <Leader>ff :Denite file<cr>
+	nnoremap <Leader>fp :DeniteProjectDir file_rec<cr>
+	nnoremap <Leader>y :Denite neoyank<cr>
+	nnoremap <M-x> :Denite command<cr>
+	inoremap <M-x> <C-o>:Denite command<cr>
+endif
 
 if has_key(g:plugs, 'fzf.vim')
 	nnoremap <Leader>bb :Buffers<cr>
