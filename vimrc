@@ -756,6 +756,13 @@ imap <M-n> <C-n>
 imap <M-p> <C-p>
 "imap </ </<C-x><C-o>
 
+cnoremap <C-A> <Home>
+cnoremap <C-X><C-A> <C-A>
+cnoremap <C-B> <Left>
+cnoremap <expr> <C-F> getcmdpos()>strlen(getcmdline())?&cedit:"\<Lt>Right>"
+cnoremap <expr> <C-D> getcmdpos()>strlen(getcmdline())?"\<Lt>C-D>":"\<Lt>Del>"
+cnoremap <M-d> <S-Right><C-W>
+
 nnoremap <M-;> :call NERDComment(0, 'toggle')<cr>
 vnoremap <M-;> :call NERDComment(0, 'toggle')<cr>
 nnoremap <M-'> :call NERDComment(0, 'invert')<cr>
