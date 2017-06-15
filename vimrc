@@ -120,21 +120,6 @@ endif
 "Plug 'Quramy/tsuquyomi'
 Plug 'chrisbra/csv.vim'
 
-"Plug 'altercation/vim-colors-solarized'
-"Plug 'jnurmine/Zenburn'
-"Plug 'tomasr/molokai'
-"Plug 'chriskempson/tomorrow-theme', {'rtp': 'vim'}
-"Plug 'noahfrederick/vim-hemisu'
-"Plug 'vim-scripts/earendel'
-"Plug 'candycode.vim'
-"Plug 'twerth/ir_black'
-"Plug 'jpo/vim-railscasts-theme'
-"Plug 'nanotech/jellybeans.vim'
-"Plug 'vim-scripts/peaksea'
-"Plug 'vim-scripts/proton'
-"Plug 'vim-scripts/pyte'
-"Plug 'vim-scripts/xoria256.vim'
-
 let vimrc_plugins = vimfiles_dir.'vimrc.plugins'
 
 if filereadable(vimrc_plugins)
