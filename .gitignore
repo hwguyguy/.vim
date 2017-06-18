@@ -1,6 +1,7 @@
 /.*
 !/.gitignore
 /autoload/plug.vim
+/autoload/plug.vim.old
 /plugged
 /vimrc.plugins
 /vimrc.override
