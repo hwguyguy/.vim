@@ -231,7 +231,9 @@ set nobackup		" DON'T keep a backup file
 set nowritebackup
 "set backupdir=$VIM/bak
 
-let &viminfo="'50,<0,s0,h,n" . vimfiles_dir . "/.viminfo"
+if !has('nvim')
+	let &viminfo="'50,<0,s0,h,n" . vimfiles_dir . ".viminfo"
+endif
 
 let &undodir=vimfiles_dir.'.undo'
 set undofile
@@ -824,7 +826,13 @@ map <Leader>r <Plug>(easymotion-repeat)
 nmap n <Plug>(anzu-n-with-echo)
 nmap N <Plug>(anzu-N-with-echo)
 
-set <M-;>=;
+if !has('nvim')
+	set <M-;>=;
+endif
+
+if has('nvim')
+	tnoremap <esc> <C-\><C-n>
+endif
 
 " }
 
