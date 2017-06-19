@@ -789,7 +789,7 @@ endif
 
 if has_key(g:plugs, 'denite.nvim')
 	nnoremap <Leader>bb :Denite buffer<cr>
-	nnoremap <Leader>ff :Denite file<cr>
+	nnoremap <Leader>ff :Denite file file:new<cr>
 	nnoremap <Leader>fp :DeniteProjectDir file_rec<cr>
 	nnoremap <Leader>y :Denite neoyank<cr>
 	nnoremap <M-x> :Denite command<cr>
