@@ -521,7 +521,7 @@ endif
 if has_key(g:plugs, 'denite.nvim')
 	call denite#custom#option('default', 'reversed', 1)
 
-	call denite#custom#var('file_rec', 'command', ['ag', '--hidden', '--follow', '--nocolor', '--nogroup', '-g', ''])
+	call denite#custom#var('file_rec', 'command', ['ag', '--hidden', '--follow', '--nocolor', '--nogroup', '--skip-vcs-ignores', '-g', ''])
 
 	call denite#custom#map(
 				\ 'insert',
@@ -564,7 +564,7 @@ endif
 
 " fzf {
 if has_key(g:plugs, 'fzf.vim')
-	let $FZF_DEFAULT_COMMAND = 'ag --hidden --follow --nocolor --nogroup -g ""'
+	let $FZF_DEFAULT_COMMAND = 'ag --hidden --follow --nocolor --nogroup --skip-vcs-ignores -g ""'
 endif
 " }
 
