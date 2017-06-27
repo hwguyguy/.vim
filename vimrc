@@ -168,6 +168,10 @@ else
 	set t_Co=256			"set terminal to 256 color
 	set t_Sf=[3%p1%dm
 	set t_Sb=[4%p1%dm
+
+	if ($COLORTERM == 'truecolor' || $TERM_PROGRAM == 'iTerm.app')
+		set termguicolors
+	endif
 endif
 
 " No blinking cursor in linux console
