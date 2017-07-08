@@ -172,6 +172,11 @@ else
 	if ($COLORTERM == 'truecolor' || $TERM_PROGRAM == 'iTerm.app')
 		set termguicolors
 	endif
+
+	"let &titlestring = fnamemodify(expand('%:p'), ':~')
+	if &term == 'xterm' || &term == 'xterm-256color'
+		set title
+	endif
 endif
 
 " No blinking cursor in linux console
@@ -754,6 +759,7 @@ inoremap <C-f> <C-o>l
 inoremap <C-b> <C-o>h
 inoremap <M-f> <C-o>w
 inoremap <M-b> <C-o>b
+inoremap <expr> <C-D> col('.')>strlen(getline('.'))?"\<Lt>C-D>":"\<Lt>Del>"
 inoremap <M-d> <C-o>de
 inoremap <M-h> <C-w>
 inoremap <M-BS> <C-w>
@@ -800,7 +806,7 @@ if has_key(g:plugs, 'denite.nvim')
 	inoremap <M-x> <C-o>:Denite command<cr>
 endif
 
-if has_key(g:plugs, 'fzf.vim')
+if has_key(g:plugs, 'fzf.vim') && !has('gui_running')
 	nnoremap <Leader>bb :Buffers<cr>
 	nnoremap <Leader>fp :ProjectRootExe Files<cr>
 endif
