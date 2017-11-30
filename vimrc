@@ -86,7 +86,6 @@ Plug 'scrooloose/nerdtree'
 "Plug 'Shougo/vimfiler.vim'
 Plug 'justinmk/vim-gtfo'
 "Plug 'majutsushi/tagbar'
-Plug 'scrooloose/syntastic'
 Plug 'tpope/vim-fugitive'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
@@ -98,12 +97,15 @@ if !has('win32')
 endif
 "Plug 'terryma/vim-multiple-cursors'
 
-"Plug 'pangloss/vim-javascript'
+"Plug 'scrooloose/syntastic'
+"Plug 'pangloss/vim-javascript', { 'commit': '00624225c6b5ae7858d1186e99540022ced92f98' }
 "Plug 'mxw/vim-jsx'
+"Plug 'posva/vim-vue'
 "Plug 'ternjs/tern_for_vim', {'do': 'yarn'}
 "Plug 'mattn/emmet-vim'
 "Plug 'hail2u/vim-css3-syntax'
 "Plug 'cakebaker/scss-syntax.vim'
+"Plug 'wavded/vim-stylus'
 "Plug 'vim-ruby/vim-ruby'
 "Plug 'tpope/vim-endwise'
 "Plug 'tpope/vim-rails'
@@ -545,6 +547,8 @@ if has_key(g:plugs, 'denite.nvim')
 				\ '<denite:leave_mode>',
 				\ 'noremap'
 				\)
+
+	call denite#custom#option('_', 'highlight_matched_char', 'Cursorline')
 endif
 " }
 
