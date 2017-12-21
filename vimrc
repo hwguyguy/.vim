@@ -63,14 +63,8 @@ Plug 'scrooloose/nerdcommenter'
 Plug 'tpope/vim-abolish'
 "Plug 'vim-scripts/repeat-motion'
 Plug 'chrisbra/NrrwRgn'
-"Plug 'Valloric/YouCompleteMe', {'do': './install.py'}
-if (has('lua') && (v:version > 703 || v:version == 703 && has('patch885')))
-	Plug 'Shougo/neocomplete.vim'
-endif
-Plug 'Shougo/neosnippet'
-Plug 'Shougo/neosnippet-snippets'
 Plug 'dbakker/vim-projectroot'
-if (has('python3'))
+if has('python3')
 	Plug 'Shougo/denite.nvim'
 else
 	Plug 'Shougo/unite.vim'
@@ -83,7 +77,14 @@ endif
 "Plug 'kien/ctrlp.vim'
 Plug 'jlanzarotta/bufexplorer'
 Plug 'scrooloose/nerdtree'
-"Plug 'Shougo/vimfiler.vim'
+"Plug 'Valloric/YouCompleteMe', {'do': './install.py'}
+if has('nvim')
+	Plug 'Shougo/deoplete.nvim', {'do': ':UpdateRemotePlugins'}
+elseif has('lua') && (v:version > 703 || v:version == 703 && has('patch885'))
+	Plug 'Shougo/neocomplete.vim'
+endif
+Plug 'Shougo/neosnippet'
+Plug 'Shougo/neosnippet-snippets'
 Plug 'justinmk/vim-gtfo'
 "Plug 'majutsushi/tagbar'
 Plug 'tpope/vim-fugitive'
@@ -470,35 +471,6 @@ let g:NERDDefaultAlign = 'left'
 
 " }
 
-" YouCompleteMe {
-
-if has_key(g:plugs, 'YouCompleteMe')
-	let g:ycm_auto_trigger = 1
-	if !exists("g:ycm_semantic_triggers")
-		let g:ycm_semantic_triggers = {}
-	endif
-	let g:ycm_semantic_triggers['typescript'] = ['re![a-zA-Z0-9_.]']
-endif
-
-" }
-
-" Taglist {
-
-"let Tlist_JS_Settings = 'javascript;s:string;a:array;o:object;f:function'
-if has('win32')
-	let Tlist_Ctags_Cmd='"'.$VIM.'/ctags/ctags.exe"'
-endif
-
-" }
-
-" Tagbar {
-
-if has('win32')
-	let g:tagbar_ctags_bin = ''.$VIM.'/ctags/ctags.exe'
-endif
-
-" }
-
 " BufExplorer {
 
 let g:bufExplorerShowNoName=1        " Show "No Name" buffers.
@@ -512,14 +484,6 @@ let g:bufExplorerShowRelativePath=1  " Show relative paths.
 "autocmd VimEnter * wincmd p " move cursor to main window
 let NERDTreeShowHidden=1
 let NERDTreeIgnore=['^\.\.$', '^\.$']
-
-" }
-
-" vimfiler {
-
-if has('win32')
-	let g:vimfiler_data_directory = vimfiles_dir.'.cache/vimfiler'
-endif
 
 " }
 
@@ -593,6 +557,45 @@ if has_key(g:plugs, 'ctrlp.vim')
 	let g:ctrlp_root_markers = ['.ctrlp']
 	let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard']
 endif
+" }
+
+" YouCompleteMe {
+
+if has_key(g:plugs, 'YouCompleteMe')
+	let g:ycm_auto_trigger = 1
+	if !exists("g:ycm_semantic_triggers")
+		let g:ycm_semantic_triggers = {}
+	endif
+	let g:ycm_semantic_triggers['typescript'] = ['re![a-zA-Z0-9_.]']
+endif
+
+" }
+
+" deoplete.nvim {
+
+if has_key(g:plugs, 'deoplete.nvim')
+	let g:deoplete#enable_at_startup = 1
+	let g:deoplete#auto_complete_start_length = 1
+	"let deoplete-source-attribute-min_pattern_length = 1
+endif
+
+" }
+
+" Taglist {
+
+"let Tlist_JS_Settings = 'javascript;s:string;a:array;o:object;f:function'
+if has('win32')
+	let Tlist_Ctags_Cmd='"'.$VIM.'/ctags/ctags.exe"'
+endif
+
+" }
+
+" Tagbar {
+
+if has('win32')
+	let g:tagbar_ctags_bin = ''.$VIM.'/ctags/ctags.exe'
+endif
+
 " }
 
 " Syntastic {
