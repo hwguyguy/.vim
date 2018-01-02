@@ -161,7 +161,7 @@ if has('gui_running')
 	endif
 	"winpos 400 20
 	"set lines=40 columns=140
-	"set linespace=1 "lsp
+	"set linespace=1
 else
 	set t_Co=256			"set terminal to 256 color
 	set t_Sf=[3%p1%dm
@@ -171,16 +171,15 @@ else
 		set termguicolors
 	endif
 
-	"let &titlestring = fnamemodify(expand('%:p'), ':~')
-	if &term == 'xterm' || &term == 'xterm-256color'
+	if &term == 'linux'
+		" No blinking cursor in linux console
+		"set t_ve+=[?81;0;112c
+	else
+		"let &titlestring = fnamemodify(expand('%:p'), ':~')
 		set title
 	endif
 endif
 
-" No blinking cursor in linux console
-"if &term == 'linux'
-"	set t_ve+=[?81;0;112c
-"endif
 
 colors wombat256
 
@@ -230,7 +229,7 @@ let g:airline#extensions#anzu#enabled=0
 " Backup files {
 
 " swap files
-"set directory=$VIM/swp "set dir=
+"set directory=$VIM/swp
 set noswapfile
 
 " backup files
@@ -343,8 +342,8 @@ set completeopt=menu,longest
 
 " Indentation {
 
-set tabstop=4			" ts
-set shiftwidth=4		" sw: 4 characters for indenting
+set tabstop=4
+set shiftwidth=4
 set softtabstop=0
 set noexpandtab
 set cindent
@@ -381,17 +380,17 @@ augroup java_indent
 augroup END
 
 " press <tab> to indent in insert mode
-autocmd FileType perl,javascript,php,css setlocal cinkeys+=!<tab>
-autocmd FileType perl,javascript,php,css setlocal indentkeys+=!<tab>
+"autocmd FileType perl,javascript,php,css setlocal cinkeys+=!<tab>
+"autocmd FileType perl,javascript,php,css setlocal indentkeys+=!<tab>
 
 " }
 
 " Search {
 
-set incsearch		" do incremental searching
-set hlsearch " highlight all search matches
-set ignorecase			" ignore case
-set smartcase			" but don't ignore it, when search string contains uppercase letters
+set incsearch  " do incremental searching
+set hlsearch   " highlight all search matches
+set ignorecase " ignore case
+set smartcase  " but don't ignore it, when search string contains uppercase letters
 
 " }
 
@@ -428,34 +427,34 @@ cnoreabbrev <expr> wd ((getcmdtype() is# ':' && getcmdline() is# 'wd')?('w<bar>b
 "set exrc " per directory .vimrc file, replaced by below function
 
 " read local settings
-function! s:LoadCustomConf()
-	let path=expand('%:p:h')
-	if has('win32')
-		let sep='\'
-		let root=strpart(path, 0, stridx(path, sep))
-	elseif has('unix')
-		let sep='/'
-		let root=$HOME
-	else
-		let sep='/'
-		let root=$HOME
-	endif
-	while (match(path, root) == 0)
-		if filereadable(path.'/.vim.custom')
-			break
-		endif
-		let path=strpart(path, 0, strridx(path, sep))
-	endwhile
-	if filereadable(path.'/.vim.custom')
-		let cmd='so '.path.'/.vim.custom'
-		let cmd=substitute(cmd, ' ', '\\ ', 'g')
-		execute cmd
-	endif
-endfunction
-augroup custom_conf
-	autocmd!
-	autocmd BufNewFile,BufRead * call s:LoadCustomConf()
-augroup END
+"function! s:LoadCustomConf()
+"    let path=expand('%:p:h')
+"    if has('win32')
+"        let sep='\'
+"        let root=strpart(path, 0, stridx(path, sep))
+"    elseif has('unix')
+"        let sep='/'
+"        let root=$HOME
+"    else
+"        let sep='/'
+"        let root=$HOME
+"    endif
+"    while (match(path, root) == 0)
+"        if filereadable(path.'/.vim.custom')
+"            break
+"        endif
+"        let path=strpart(path, 0, strridx(path, sep))
+"    endwhile
+"    if filereadable(path.'/.vim.custom')
+"        let cmd='so '.path.'/.vim.custom'
+"        let cmd=substitute(cmd, ' ', '\\ ', 'g')
+"        execute cmd
+"    endif
+"endfunction
+"augroup custom_conf
+"    autocmd!
+"    autocmd BufNewFile,BufRead * call s:LoadCustomConf()
+"augroup END
 
 " }
 
@@ -722,7 +721,7 @@ CommandCabbr rco Rco
 
 " Keybindings {
 
-set winaltkeys=no "wak
+set winaltkeys=no
 
 let mapleader = "\<space>"
 
