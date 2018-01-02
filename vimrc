@@ -837,8 +837,11 @@ map <Leader>r <Plug>(easymotion-repeat)
 nmap n <Plug>(anzu-n-with-echo)
 nmap N <Plug>(anzu-N-with-echo)
 
-if !has('nvim')
+if !has('gui_running') && !has('nvim')
 	set <M-;>=;
+	set <M-x>=x
+	set <M-s>=s
+	set <M-w>=w
 endif
 
 if has('nvim')
