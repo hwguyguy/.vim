@@ -74,35 +74,41 @@ if !has('win32')
 	Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' }
 	Plug 'junegunn/fzf.vim'
 endif
-"Plug 'kien/ctrlp.vim'
+Plug 'kien/ctrlp.vim'
+Plug 'fisadev/vim-ctrlp-cmdpalette'
 Plug 'jlanzarotta/bufexplorer'
 Plug 'scrooloose/nerdtree'
 "Plug 'Valloric/YouCompleteMe', {'do': './install.py'}
-if has('nvim')
+if has('nvim') && has('python3')
 	Plug 'Shougo/deoplete.nvim', {'do': ':UpdateRemotePlugins'}
 elseif has('lua') && (v:version > 703 || v:version == 703 && has('patch885'))
 	Plug 'Shougo/neocomplete.vim'
 endif
-Plug 'Shougo/neosnippet'
-Plug 'Shougo/neosnippet-snippets'
+if v:version >= 704
+	Plug 'Shougo/neosnippet'
+	Plug 'Shougo/neosnippet-snippets'
+endif
 Plug 'justinmk/vim-gtfo'
 "Plug 'majutsushi/tagbar'
 Plug 'tpope/vim-fugitive'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'lilydjwg/colorizer'
-Plug 'osyo-manga/vim-anzu'
-Plug '907th/vim-auto-save'
-if !has('win32')
-	Plug 'benmills/vimux'
-endif
+"Plug 'osyo-manga/vim-anzu'
+"Plug '907th/vim-auto-save'
+"if !has('win32')
+"    Plug 'benmills/vimux'
+"endif
 "Plug 'terryma/vim-multiple-cursors'
 
-"Plug 'scrooloose/syntastic'
+"if has('nvim') || v:version >= 800
+"    Plug 'w0rp/ale'
+"else
+"    Plug 'scrooloose/syntastic'
+"endif
 "Plug 'pangloss/vim-javascript', { 'commit': '00624225c6b5ae7858d1186e99540022ced92f98' }
 "Plug 'mxw/vim-jsx'
 "Plug 'posva/vim-vue'
-"Plug 'ternjs/tern_for_vim', {'do': 'yarn'}
 "Plug 'mattn/emmet-vim'
 "Plug 'hail2u/vim-css3-syntax'
 "Plug 'cakebaker/scss-syntax.vim'
@@ -114,9 +120,6 @@ endif
 "if (!has('win32') && (has('python') || has('python3')))
 	"Plug 'klen/python-mode'
 "endif
-"Plug 'jmcomets/vim-pony'
-"Plug 'MaicoTimmerman/Vim-Jinja2-Syntax'
-"Plug '2072/PHP-Indenting-for-VIm'
 "Plug 'fatih/vim-go'
 "Plug 'leafgarland/typescript-vim'
 "Plug 'Quramy/tsuquyomi'
@@ -131,7 +134,7 @@ endif
 call plug#end()
 
 if has_vim_plug == 0
-	echo "Installing Plugins, please ignore key map error messages"
+	echo "Installing Plugins"
 	:PlugInstall
 endif
 
@@ -160,7 +163,7 @@ if has('gui_running')
 		set guifont=Ubuntu\ Mono\ 12,DejaVu\ Sans\ Mono\ 10
 	endif
 	"winpos 400 20
-	"set lines=40 columns=140
+	"set lines=34 columns=105
 	"set linespace=1
 else
 	set t_Co=256			"set terminal to 256 color
@@ -541,10 +544,6 @@ endif
 
 " CtrlP {
 if has_key(g:plugs, 'ctrlp.vim')
-	if has('win32')
-		let g:ctrlp_cache_dir = vimfiles_dir.'/.cache/ctrlp'
-	endif
-
 	let g:ctrlp_map = ''
 	let g:ctrlp_prompt_mappings = {
 				\ 'PrtSelectMove("j")':   ['<c-n>', '<down>'],
@@ -553,8 +552,12 @@ if has_key(g:plugs, 'ctrlp.vim')
 				\ 'PrtHistory(1)':        ['<m-p>'],
 				\ }
 	let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:10,results:10'
-	let g:ctrlp_root_markers = ['.ctrlp']
-	let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard']
+endif
+" }
+
+" Vim-CtrlP-CmdPalette {
+if has_key(g:plugs, 'vim-ctrlp-cmdpalette')
+	let g:ctrlp_cmdpalette_execute = 1
 endif
 " }
 
@@ -597,17 +600,6 @@ endif
 
 " }
 
-" Syntastic {
-
-let g:syntastic_check_on_open=1
-"let g:syntastic_enable_perl_checker=1
-"let g:syntastic_perl_checkers = ['perl', 'podchecker']
-let g:syntastic_mode_map = { "mode": "active",
-			\ "active_filetypes": ["php"],
-			\ "passive_filetypes": ["text", "vim", "python"] }
-
-" }
-
 " EasyMotion {
 
 let g:EasyMotion_smartcase = 1
@@ -642,11 +634,37 @@ endfunction
 
 " AutoSave {
 
-let g:auto_save = 0
+if has_key(g:plugs, 'vim-auto-save')
+
+let g:auto_save = 1
 let g:auto_save_no_updatetime = 1
 let g:auto_save_silent = 1
 let g:auto_save_in_insert_mode = 0
 let g:auto_save_events = ['InsertLeave', 'TextChanged']
+
+endif
+
+" }
+
+" ALE {
+
+if has_key(g:plugs, 'ale')
+	let g:ale_javascript_eslint_use_global = 1
+	"let g:ale_javascript_eslint_executable = 'eslint_d'
+endif
+
+" }
+
+" Syntastic {
+
+if has_key(g:plugs, 'syntastic')
+	let g:syntastic_check_on_open=1
+	"let g:syntastic_enable_perl_checker=1
+	"let g:syntastic_perl_checkers = ['perl', 'podchecker']
+	let g:syntastic_mode_map = { "mode": "active",
+				\ "active_filetypes": [],
+				\ "passive_filetypes": ["text", "vim", "python"] }
+endif
 
 " }
 
@@ -699,6 +717,16 @@ if has_key(g:plugs, 'tsuquyomi')
 	autocmd FileType typescript map <buffer> <C-u> <Plug>(TsuquyomiReferences)
 	autocmd FileType typescript nmap <buffer> <C-e> <Plug>(TsuquyomiRenameSymbol)
 	autocmd FileType typescript nmap <buffer> <C-i> <Plug>(TsuquyomiImport)
+endif
+
+" }
+
+" vim-go {
+
+if has_key(g:plugs, 'vim-go')
+	augroup go_html_template_syntax
+		autocmd BufRead,BufNewFile $GOPATH/src/*.html setlocal filetype=gohtmltmpl
+	augroup END
 endif
 
 " }
@@ -785,10 +813,6 @@ vnoremap <Leader>; :call NERDComment(0, 'toggle')<cr>
 nnoremap <Leader>' :call NERDComment(0, 'invert')<cr>
 vnoremap <Leader>' :call NERDComment(0, 'invert')<cr>
 
-if has_key(g:plugs, 'ctrlp.vim')
-	nnoremap <Leader>fd :CtrlP<cr>
-endif
-
 if has_key(g:plugs, 'unite.vim')
 	nnoremap <Leader>bb :Unite buffer<cr>
 	nnoremap <Leader>ff :Unite file file/new<cr>
@@ -810,6 +834,10 @@ endif
 if has_key(g:plugs, 'fzf.vim') && !has('gui_running')
 	nnoremap <Leader>bb :Buffers<cr>
 	nnoremap <Leader>fp :ProjectRootExe Files<cr>
+endif
+
+if has_key(g:plugs, 'ctrlp.vim') && has_key(g:plugs, 'vim-ctrlp-cmdpalette')
+	nnoremap <M-x> :CtrlPCmdPalette<cr>
 endif
 
 nnoremap <silent> + :let @/ .= '\\|\<'.expand('<cword>').'\>'<cr>
@@ -834,8 +862,10 @@ map <Leader>l <Plug>(easymotion-bd-jk)
 map <Leader>/ <Plug>(easymotion-bd-n)
 map <Leader>r <Plug>(easymotion-repeat)
 
-nmap n <Plug>(anzu-n-with-echo)
-nmap N <Plug>(anzu-N-with-echo)
+if has_key(g:plugs, 'vim-anzu')
+	nmap n <Plug>(anzu-n-with-echo)
+	nmap N <Plug>(anzu-N-with-echo)
+endif
 
 if !has('gui_running') && !has('nvim')
 	set <M-;>=;
