@@ -650,7 +650,9 @@ endif
 
 if has_key(g:plugs, 'ale')
 	let g:ale_javascript_eslint_use_global = 1
-	"let g:ale_javascript_eslint_executable = 'eslint_d'
+	if executable('eslint_d')
+		let g:ale_javascript_eslint_executable = 'eslint_d'
+	endif
 endif
 
 " }
@@ -658,12 +660,15 @@ endif
 " Syntastic {
 
 if has_key(g:plugs, 'syntastic')
-	let g:syntastic_check_on_open=1
-	"let g:syntastic_enable_perl_checker=1
-	"let g:syntastic_perl_checkers = ['perl', 'podchecker']
 	let g:syntastic_mode_map = { "mode": "active",
 				\ "active_filetypes": [],
 				\ "passive_filetypes": ["text", "vim", "python"] }
+	let g:syntastic_check_on_open=1
+	"let g:syntastic_enable_perl_checker=1
+	"let g:syntastic_perl_checkers = ['perl', 'podchecker']
+	if executable('eslint_d')
+		let g:syntastic_javascript_checkers = ['eslint_d']
+	endif
 endif
 
 " }
