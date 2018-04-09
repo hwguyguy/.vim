@@ -883,6 +883,18 @@ if has('nvim')
 	tnoremap <esc> <C-\><C-n>
 endif
 
+if has('gui_macvim') || has('gui_vimr')
+	redir => map_output
+	silent map
+	redir END
+	let lines = split(map_output, "\n")
+	for line in lines
+		if strpart(line, 3, 3) == '<M-'
+			execute substitute(strpart(line, 0, 1).'noremap <D-'.strpart(line, 6), "\*", "", "")
+		endif
+	endfor
+endif
+
 " }
 
 " Neocomplete {
