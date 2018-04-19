@@ -1,4 +1,7 @@
-set nocompatible
+if !has('nvim')
+	set nocompatible
+	set pyx=3
+endif
 
 " Encoding {
 
@@ -15,10 +18,11 @@ set langmenu=en_US.UTF-8
 
 " Variables {
 
+let vimfiles_dir = $HOME.'/.vim/'
 if has('win32')
 	set runtimepath=$HOME/.vim,$VIM/vimfiles,$VIMRUNTIME,$VIM/vimfiles/after,$HOME/.vim/after
+	let vimfiles_dir = $HOME.'/vimfiles/'
 endif
-let vimfiles_dir = $HOME.'/.vim/'
 
 " }
 
@@ -26,14 +30,13 @@ let vimfiles_dir = $HOME.'/.vim/'
 
 let vim_plug_location=expand(vimfiles_dir.'autoload/plug.vim')
 if filereadable(vim_plug_location)
-	let has_vim_plug = 1
+	let s:has_vim_plug = 1
 else
-	let has_vim_plug = 0
+	let s:has_vim_plug = 0
 	if has('win32')
-		echo "Click OK to install vim-plug."
+		echo "Click OK to install vim-plug"
 	else
-		echo "Installing vim-plug..."
-		echo ""
+		echo "Installing vim-plug
 	endif
 	silent execute '!mkdir -p '.vimfiles_dir.'autoload'
 	silent execute '!mkdir -p '.vimfiles_dir.'plugged'
@@ -79,7 +82,13 @@ Plug 'fisadev/vim-ctrlp-cmdpalette'
 Plug 'jlanzarotta/bufexplorer'
 Plug 'scrooloose/nerdtree'
 "Plug 'Valloric/YouCompleteMe', {'do': './install.py'}
-if has('nvim') && has('python3')
+if has('python3') && (has('nvim') || v:version >= 800)
+	if !has('nvim')
+		Plug 'roxma/nvim-yarp'
+		Plug 'roxma/vim-hug-neovim-rpc'
+		" pip install --user 'greenlet==0.4.10'
+		" https://github.com/roxma/vim-hug-neovim-rpc/issues/3
+	endif
 	Plug 'Shougo/deoplete.nvim', {'do': ':UpdateRemotePlugins'}
 elseif has('lua') && (v:version > 703 || v:version == 703 && has('patch885'))
 	Plug 'Shougo/neocomplete.vim'
@@ -117,7 +126,7 @@ Plug 'lilydjwg/colorizer'
 "Plug 'tpope/vim-endwise'
 "Plug 'tpope/vim-rails'
 "Plug 'nginx/nginx', {'rtp': 'contrib/vim'}
-"if (!has('win32') && (has('python') || has('python3')))
+"if !has('win32') && (has('python') || has('python3'))
 	"Plug 'klen/python-mode'
 "endif
 "Plug 'fatih/vim-go'
@@ -133,8 +142,8 @@ endif
 
 call plug#end()
 
-if has_vim_plug == 0
-	echo "Installing Plugins"
+if s:has_vim_plug == 0
+	echo "Installing plugins"
 	:PlugInstall
 endif
 
@@ -170,7 +179,7 @@ else
 	set t_Sf=[3%p1%dm
 	set t_Sb=[4%p1%dm
 
-	if ($COLORTERM == 'truecolor' || $TERM_PROGRAM == 'iTerm.app')
+	if $COLORTERM == 'truecolor' || $TERM_PROGRAM == 'iTerm.app'
 		set termguicolors
 	endif
 
@@ -248,7 +257,7 @@ let &undodir=vimfiles_dir.'.undo'
 set undofile
 
 " backup files edited from WinSCP
-"if (has('win32'))
+"if has('win32')
 "	let g:my_save_cache_dir='C:\/app\/WinSCP\/cache\/scp[0-9]*\/'
 "	let g:my_save_bak_dir='C:\/app\/WinSCP\/bak\/'
 "	augroup my_save
@@ -717,6 +726,12 @@ if has_key(g:plugs, 'tsuquyomi')
 	let g:tsuquyomi_disable_default_mappings = 1
 	let g:tsuquyomi_shortest_import_path = 1
 	let g:tsuquyomi_single_quote_import = 1
+
+	if has_key(g:plugs, 'syntastic')
+		let g:tsuquyomi_disable_quickfix = 1
+		let g:syntastic_typescript_checkers = ['tsuquyomi'] " You shouldn't use 'tsc' checker.
+	endif
+
 	autocmd FileType typescript map <buffer> <C-]> <Plug>(TsuquyomiDefinition)
 	autocmd FileType typescript map <buffer> <C-t> <Plug>(TsuquyomiGoBack)
 	autocmd FileType typescript map <buffer> <C-u> <Plug>(TsuquyomiReferences)
@@ -802,6 +817,9 @@ imap <M-n> <C-n>
 imap <M-p> <C-p>
 "imap </ </<C-x><C-o>
 
+inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+
 cnoremap <C-A> <Home>
 cnoremap <C-X><C-A> <C-A>
 cnoremap <C-B> <Left>
@@ -843,6 +861,7 @@ endif
 
 if has_key(g:plugs, 'ctrlp.vim') && has_key(g:plugs, 'vim-ctrlp-cmdpalette')
 	nnoremap <M-x> :CtrlPCmdPalette<cr>
+	inoremap <M-x> <C-o>:CtrlPCmdPalette<cr>
 endif
 
 nnoremap <silent> + :let @/ .= '\\|\<'.expand('<cword>').'\>'<cr>
@@ -884,13 +903,13 @@ if has('nvim')
 endif
 
 if has('gui_macvim') || has('gui_vimr')
-	redir => map_output
+	redir => s:map_output
 	silent map
 	redir END
-	let lines = split(map_output, "\n")
-	for line in lines
-		if strpart(line, 3, 3) == '<M-'
-			execute substitute(strpart(line, 0, 1).'noremap <D-'.strpart(line, 6), "\*", "", "")
+	let s:lines = split(s:map_output, "\n")
+	for s:line in s:lines
+		if strpart(s:line, 3, 3) == '<M-'
+			execute substitute(strpart(s:line, 0, 1).'noremap <D-'.strpart(s:line, 6), "\*", "", "")
 		endif
 	endfor
 endif
