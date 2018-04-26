@@ -771,7 +771,7 @@ CommandCabbr rco Rco
 
 set winaltkeys=no
 
-let mapleader = "\<space>"
+let mapleader = "\<Space>"
 
 map w <Plug>CamelCaseMotion_w
 map b <Plug>CamelCaseMotion_b
@@ -783,7 +783,7 @@ nnoremap gj j
 nnoremap gk k
 nnoremap <C-j> o<esc>
 nnoremap <C-k> O<esc>
-nnoremap <F4> :tabe<space>
+nnoremap <F4> :tabe<Space>
 nnoremap <F5> gT
 nnoremap <F6> gt
 nnoremap <F7> <C-w>v
@@ -798,10 +798,10 @@ nnoremap <kPlus> <C-a>
 nnoremap <kMinus> <C-x>
 
 inoremap <C-g> <esc>
-inoremap <M-space> <esc>
+inoremap <M-Space> <esc>
 cnoremap <C-g> <C-c>
 vnoremap <C-g> <esc>
-vnoremap <M-space> <esc>
+vnoremap <M-Space> <esc>
 
 inoremap <C-e> <C-o>A
 inoremap <C-f> <C-o>l
