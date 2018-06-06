@@ -587,6 +587,11 @@ if has_key(g:plugs, 'deoplete.nvim')
 	let g:deoplete#enable_at_startup = 1
 	let g:deoplete#auto_complete_start_length = 1
 	"let deoplete-source-attribute-min_pattern_length = 1
+
+	function! s:my_cr_function()
+		return (pumvisible() ? "\<C-y>" : "" ) . "\<CR>"
+	endfunction
+	inoremap <silent><expr><CR> <C-r>=<SID>my_cr_function()<CR>
 endif
 " }
 
