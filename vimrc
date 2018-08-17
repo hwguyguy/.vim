@@ -133,6 +133,9 @@ Plug 'lilydjwg/colorizer'
 "Plug 'fatih/vim-go'
 "Plug 'leafgarland/typescript-vim'
 "Plug 'Quramy/tsuquyomi'
+"Plug 'StanAngeloff/php.vim', { 'for': 'php' }
+"Plug 'autozimu/LanguageClient-neovim', { 'for': 'php', 'branch': 'next', 'do': 'bash install.sh' }
+"Plug 'roxma/LanguageServer-php-neovim',  { 'for': 'php', 'do': 'composer install && composer run-script parse-stubs' }
 Plug 'chrisbra/csv.vim'
 
 let vimrc_plugins = vimfiles_dir.'vimrc.plugins'
