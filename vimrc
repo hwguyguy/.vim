@@ -21,7 +21,6 @@ set langmenu=en_US.UTF-8
 let vimfiles_dir = $HOME.'/.vim/'
 if has('win32')
 	set runtimepath=$HOME/.vim,$VIM/vimfiles,$VIMRUNTIME,$VIM/vimfiles/after,$HOME/.vim/after
-	let vimfiles_dir = $HOME.'/vimfiles/'
 endif
 
 " }
