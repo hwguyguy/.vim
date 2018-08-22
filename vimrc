@@ -36,7 +36,7 @@ else
 	if has('win32')
 		echo "Click OK to install vim-plug"
 	else
-		echo "Installing vim-plug
+		echo "Installing vim-plug"
 	endif
 	silent execute '!mkdir -p '.vimfiles_dir.'autoload'
 	silent execute '!mkdir -p '.vimfiles_dir.'plugged'
