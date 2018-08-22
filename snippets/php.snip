@@ -1,0 +1,44 @@
+snippet fn
+options word
+    function ${1:#:method_name}(${2:#:attribute}) {
+        ${0:TARGET}
+    }
+
+snippet m
+options head
+    public function ${1:#:method_name}(${2:#:attribute}) {
+        ${0:TARGET}
+    }
+
+snippet p
+options head
+    protected function ${1:#:method_name}(${2:#:attribute}) {
+        ${0:TARGET}
+    }
+
+snippet pp
+options head
+    private function ${1:#:method_name}(${2:#:attribute}) {
+        ${0:TARGET}
+    }
+
+snippet c
+options head
+    class ${1:#:class_name} {
+        ${0:TARGET}
+    }
+
+snippet cc
+options head
+    class ${1:#:class_name} {
+        public function __construct(${2:#:attribute}) {
+            ${0:TARGET}
+        }
+    }
+
+snippet fe
+options head
+    foreach (${1:#:attribute}) {
+        ${0:TARGET}
+    }
+

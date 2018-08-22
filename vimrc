@@ -21,7 +21,6 @@ set langmenu=en_US.UTF-8
 let vimfiles_dir = $HOME.'/.vim/'
 if has('win32')
 	set runtimepath=$HOME/.vim,$VIM/vimfiles,$VIMRUNTIME,$VIM/vimfiles/after,$HOME/.vim/after
-	let vimfiles_dir = $HOME.'/vimfiles/'
 endif
 
 " }
@@ -66,6 +65,7 @@ Plug 'scrooloose/nerdcommenter'
 Plug 'tpope/vim-abolish'
 "Plug 'vim-scripts/repeat-motion'
 Plug 'chrisbra/NrrwRgn'
+Plug 'machakann/vim-swap'
 Plug 'dbakker/vim-projectroot'
 if has('python3')
 	Plug 'Shougo/denite.nvim'
@@ -80,7 +80,7 @@ endif
 Plug 'kien/ctrlp.vim'
 Plug 'fisadev/vim-ctrlp-cmdpalette'
 Plug 'jlanzarotta/bufexplorer'
-Plug 'scrooloose/nerdtree'
+"Plug 'scrooloose/nerdtree'
 "Plug 'Valloric/YouCompleteMe', {'do': './install.py'}
 if has('python3') && (has('nvim') || v:version >= 800)
 	if !has('nvim')
@@ -127,11 +127,14 @@ Plug 'lilydjwg/colorizer'
 "Plug 'tpope/vim-rails'
 "Plug 'nginx/nginx', {'rtp': 'contrib/vim'}
 "if !has('win32') && (has('python') || has('python3'))
-	"Plug 'klen/python-mode'
+"	Plug 'klen/python-mode'
 "endif
 "Plug 'fatih/vim-go'
 "Plug 'leafgarland/typescript-vim'
 "Plug 'Quramy/tsuquyomi'
+"Plug 'StanAngeloff/php.vim', { 'for': 'php' }
+"Plug 'autozimu/LanguageClient-neovim', { 'for': 'php', 'branch': 'next', 'do': 'bash install.sh' }
+"Plug 'roxma/LanguageServer-php-neovim',  { 'for': 'php', 'do': 'composer install && composer run-script parse-stubs' }
 Plug 'chrisbra/csv.vim'
 
 let vimrc_plugins = vimfiles_dir.'vimrc.plugins'
@@ -158,6 +161,25 @@ set cursorline
 set noeb
 set vb
 set t_vb=
+
+if has('nvim')
+	let g:terminal_color_0='#2e3436'
+	let g:terminal_color_1='#cc0000'
+	let g:terminal_color_2='#4e9a06'
+	let g:terminal_color_3='#c4a000'
+	let g:terminal_color_4='#3465a4'
+	let g:terminal_color_5='#75507b'
+	let g:terminal_color_6='#06989a'
+	let g:terminal_color_7='#d3d7cf'
+	let g:terminal_color_8='#555753'
+	let g:terminal_color_9='#ef2929'
+	let g:terminal_color_10='#8ae234'
+	let g:terminal_color_11='#fce94f'
+	let g:terminal_color_12='#729fcf'
+	let g:terminal_color_13='#ad7fa8'
+	let g:terminal_color_14='#34e2e2'
+	let g:terminal_color_15='#eeeeec'
+endif
 
 if has('gui_running')
 	set guioptions-=b "horizontal scroll bar
@@ -211,18 +233,18 @@ set statusline=%<%{getcwd()}\ %F%h%m%r%h%w%y[%{&ff}]%=\ col:%c%V\ lin:%l\/%L\ %P
 
 let g:airline_theme='powerlineish'
 let g:airline_mode_map = {
-		\ '__' : '-',
-		\ 'n'  : 'N',
-		\ 'i'  : 'I',
-		\ 'R'  : 'R',
-		\ 'c'  : 'C',
-		\ 'v'  : 'V',
-		\ 'V'  : 'V',
-		\ '^V' : 'V',
-		\ 's'  : 'S',
-		\ 'S'  : 'S',
-		\ '^S' : 'S',
-		\ }
+	\ '__' : '-',
+	\ 'n'  : 'N',
+	\ 'i'  : 'I',
+	\ 'R'  : 'R',
+	\ 'c'  : 'C',
+	\ 'v'  : 'V',
+	\ 'V'  : 'V',
+	\ '^V' : 'V',
+	\ 's'  : 'S',
+	\ 'S'  : 'S',
+	\ '^S' : 'S',
+	\ }
 let g:airline_left_sep=''
 let g:airline_right_sep=''
 function! s:AirlineAfterInit()
@@ -361,6 +383,7 @@ set noexpandtab
 set cindent
 set cinoptions=(0,u0,U0,m1,:0
 set autoindent
+let g:vim_indent_cont = &sw
 
 augroup fortran_indent
 	autocmd!
@@ -490,12 +513,12 @@ let g:bufExplorerShowRelativePath=1  " Show relative paths.
 " }
 
 " NERDTree {
-
-"autocmd VimEnter * NERDTree " start NERDTree automatically
-"autocmd VimEnter * wincmd p " move cursor to main window
-let NERDTreeShowHidden=1
-let NERDTreeIgnore=['^\.\.$', '^\.$']
-
+if has_key(g:plugs, 'nerdtree')
+	"autocmd VimEnter * NERDTree " start NERDTree automatically
+	"autocmd VimEnter * wincmd p " move cursor to main window
+	let NERDTreeShowHidden=1
+	let NERDTreeIgnore=['^\.\.$', '^\.$']
+endif
 " }
 
 " Denite {
@@ -505,23 +528,23 @@ if has_key(g:plugs, 'denite.nvim')
 	call denite#custom#var('file_rec', 'command', ['ag', '--hidden', '--follow', '--nocolor', '--nogroup', '--skip-vcs-ignores', '-g', ''])
 
 	call denite#custom#map(
-				\ 'insert',
-				\ '<C-n>',
-				\ '<denite:move_to_next_line>',
-				\ 'noremap'
-				\)
+		\ 'insert',
+		\ '<C-n>',
+		\ '<denite:move_to_next_line>',
+		\ 'noremap'
+		\)
 	call denite#custom#map(
-				\ 'insert',
-				\ '<C-p>',
-				\ '<denite:move_to_previous_line>',
-				\ 'noremap'
-				\)
+		\ 'insert',
+		\ '<C-p>',
+		\ '<denite:move_to_previous_line>',
+		\ 'noremap'
+		\)
 	call denite#custom#map(
-				\ 'insert',
-				\ '<C-g>',
-				\ '<denite:leave_mode>',
-				\ 'noremap'
-				\)
+		\ 'insert',
+		\ '<C-g>',
+		\ '<denite:leave_mode>',
+		\ 'noremap'
+		\)
 
 	call denite#custom#option('_', 'highlight_matched_char', 'Cursorline')
 endif
@@ -534,11 +557,11 @@ if has_key(g:plugs, 'unite.vim')
 	endif
 
 	call unite#custom#profile('default', 'context', {
-				\   'prompt': '❯ ',
-				\   'start_insert': 1,
-				\   'winheight': 10,
-				\   'direction': 'botright',
-				\ })
+		\   'prompt': '❯ ',
+		\   'start_insert': 1,
+		\   'winheight': 10,
+		\   'direction': 'botright',
+		\ })
 	call unite#filters#matcher_default#use(['matcher_fuzzy'])
 	call unite#filters#sorter_default#use(['sorter_rank'])
 	let g:unite_source_history_yank_enable = 1
@@ -555,11 +578,11 @@ endif
 if has_key(g:plugs, 'ctrlp.vim')
 	let g:ctrlp_map = ''
 	let g:ctrlp_prompt_mappings = {
-				\ 'PrtSelectMove("j")':   ['<c-n>', '<down>'],
-				\ 'PrtSelectMove("k")':   ['<c-p>', '<up>'],
-				\ 'PrtHistory(-1)':       ['<m-n>'],
-				\ 'PrtHistory(1)':        ['<m-p>'],
-				\ }
+		\ 'PrtSelectMove("j")':   ['<c-n>', '<down>'],
+		\ 'PrtSelectMove("k")':   ['<c-p>', '<up>'],
+		\ 'PrtHistory(-1)':       ['<m-n>'],
+		\ 'PrtHistory(1)':        ['<m-p>'],
+		\ }
 	let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:10,results:10'
 endif
 " }
@@ -571,7 +594,6 @@ endif
 " }
 
 " YouCompleteMe {
-
 if has_key(g:plugs, 'YouCompleteMe')
 	let g:ycm_auto_trigger = 1
 	if !exists("g:ycm_semantic_triggers")
@@ -579,52 +601,45 @@ if has_key(g:plugs, 'YouCompleteMe')
 	endif
 	let g:ycm_semantic_triggers['typescript'] = ['re![a-zA-Z0-9_.]']
 endif
-
 " }
 
 " deoplete.nvim {
-
 if has_key(g:plugs, 'deoplete.nvim')
 	let g:deoplete#enable_at_startup = 1
 	let g:deoplete#auto_complete_start_length = 1
 	"let deoplete-source-attribute-min_pattern_length = 1
-endif
 
+	function! s:my_cr_function()
+		return (pumvisible() ? "\<C-y>" : "" ) . "\<CR>"
+	endfunction
+	inoremap <silent><expr><CR> <C-r>=<SID>my_cr_function()<CR>
+endif
 " }
 
 " Taglist {
-
 "let Tlist_JS_Settings = 'javascript;s:string;a:array;o:object;f:function'
 if has('win32')
 	let Tlist_Ctags_Cmd='"'.$VIM.'/ctags/ctags.exe"'
 endif
-
 " }
 
 " Tagbar {
-
 if has('win32')
 	let g:tagbar_ctags_bin = ''.$VIM.'/ctags/ctags.exe'
 endif
-
 " }
 
 " EasyMotion {
-
 let g:EasyMotion_smartcase = 1
-
 " }
 
 " Auto Pairs {
-
 let g:AutoPairsShortcutToggle = ''
 let g:AutoPairsShortcutJump = ''
 let g:AutoPairsShortcutBackInsert = '<M-]>'
-
 " }
 
 " vim-multiple-cursors {
-
 " Called once right before you start selecting multiple cursors
 function! Multiple_cursors_before()
 	if exists(':NeoCompleteLock')==2
@@ -638,40 +653,32 @@ function! Multiple_cursors_after()
 		exe 'NeoCompleteUnlock'
 	endif
 endfunction
-
 " }
 
 " AutoSave {
-
 if has_key(g:plugs, 'vim-auto-save')
-
-let g:auto_save = 1
-let g:auto_save_no_updatetime = 1
-let g:auto_save_silent = 1
-let g:auto_save_in_insert_mode = 0
-let g:auto_save_events = ['InsertLeave', 'TextChanged']
-
+	let g:auto_save = 1
+	let g:auto_save_no_updatetime = 1
+	let g:auto_save_silent = 1
+	let g:auto_save_in_insert_mode = 0
+	let g:auto_save_events = ['InsertLeave', 'TextChanged']
 endif
-
 " }
 
 " ALE {
-
 if has_key(g:plugs, 'ale')
 	let g:ale_javascript_eslint_use_global = 1
 	if executable('eslint_d')
 		let g:ale_javascript_eslint_executable = 'eslint_d'
 	endif
 endif
-
 " }
 
 " Syntastic {
-
 if has_key(g:plugs, 'syntastic')
 	let g:syntastic_mode_map = { "mode": "active",
-				\ "active_filetypes": [],
-				\ "passive_filetypes": ["text", "vim", "python"] }
+		\ "active_filetypes": [],
+		\ "passive_filetypes": ["text", "vim", "python"] }
 	let g:syntastic_check_on_open=1
 	"let g:syntastic_enable_perl_checker=1
 	"let g:syntastic_perl_checkers = ['perl', 'podchecker']
@@ -679,25 +686,19 @@ if has_key(g:plugs, 'syntastic')
 		let g:syntastic_javascript_checkers = ['eslint_d']
 	endif
 endif
-
 " }
 
 " vim-jsx {
-
 if has_key(g:plugs, 'vim-jsx')
 	let g:jsx_ext_required = 0
 endif
-
 " }
 
 " Emmet-vim {
-
 let g:user_emmet_expandabbr_key = '<C-j>'
-
 " }
 
 " python-mode {
-
 if has_key(g:plugs, 'python-mode')
 	let g:pymode_lint_ignore="E302,E501,E265"
 
@@ -717,11 +718,9 @@ if has_key(g:plugs, 'python-mode')
 		autocmd FileType python call s:PymodeOptions()
 	augroup END
 endif
-
 " }
 
 " tsuquyomi {
-
 if has_key(g:plugs, 'tsuquyomi')
 	let g:tsuquyomi_disable_default_mappings = 1
 	let g:tsuquyomi_shortest_import_path = 1
@@ -738,17 +737,14 @@ if has_key(g:plugs, 'tsuquyomi')
 	autocmd FileType typescript nmap <buffer> <C-e> <Plug>(TsuquyomiRenameSymbol)
 	autocmd FileType typescript nmap <buffer> <C-i> <Plug>(TsuquyomiImport)
 endif
-
 " }
 
 " vim-go {
-
 if has_key(g:plugs, 'vim-go')
 	augroup go_html_template_syntax
 		autocmd BufRead,BufNewFile $GOPATH/src/*.html setlocal filetype=gohtmltmpl
 	augroup END
 endif
-
 " }
 
 " Commands {
@@ -771,7 +767,7 @@ CommandCabbr rco Rco
 
 set winaltkeys=no
 
-let mapleader = "\<space>"
+let mapleader = "\<Space>"
 
 map w <Plug>CamelCaseMotion_w
 map b <Plug>CamelCaseMotion_b
@@ -783,7 +779,7 @@ nnoremap gj j
 nnoremap gk k
 nnoremap <C-j> o<esc>
 nnoremap <C-k> O<esc>
-nnoremap <F4> :tabe<space>
+nnoremap <F4> :tabe<Space>
 nnoremap <F5> gT
 nnoremap <F6> gt
 nnoremap <F7> <C-w>v
@@ -798,10 +794,10 @@ nnoremap <kPlus> <C-a>
 nnoremap <kMinus> <C-x>
 
 inoremap <C-g> <esc>
-inoremap <M-space> <esc>
+inoremap <M-Space> <esc>
 cnoremap <C-g> <C-c>
 vnoremap <C-g> <esc>
-vnoremap <M-space> <esc>
+vnoremap <M-Space> <esc>
 
 inoremap <C-e> <C-o>A
 inoremap <C-f> <C-o>l
@@ -868,15 +864,15 @@ nnoremap <silent> + :let @/ .= '\\|\<'.expand('<cword>').'\>'<cr>
 
 " Search for selected text, forwards or backwards.
 vnoremap <silent> * :<C-U>
-  \let old_reg=getreg('"')<Bar>let old_regtype=getregtype('"')<CR>
-  \gvy/<C-R><C-R>=substitute(
-  \escape(@", '/\.*$^~['), '\_s\+', '\\_s\\+', 'g')<CR><CR>
-  \gV:call setreg('"', old_reg, old_regtype)<CR>
+	\let old_reg=getreg('"')<Bar>let old_regtype=getregtype('"')<CR>
+	\gvy/<C-R><C-R>=substitute(
+	\escape(@", '/\.*$^~['), '\_s\+', '\\_s\\+', 'g')<CR><CR>
+	\gV:call setreg('"', old_reg, old_regtype)<CR>
 vnoremap <silent> # :<C-U>
-  \let old_reg=getreg('"')<Bar>let old_regtype=getregtype('"')<CR>
-  \gvy?<C-R><C-R>=substitute(
-  \escape(@", '?\.*$^~['), '\_s\+', '\\_s\\+', 'g')<CR><CR>
-  \gV:call setreg('"', old_reg, old_regtype)<CR>
+	\let old_reg=getreg('"')<Bar>let old_regtype=getregtype('"')<CR>
+	\gvy?<C-R><C-R>=substitute(
+	\escape(@", '?\.*$^~['), '\_s\+', '\\_s\\+', 'g')<CR><CR>
+	\gV:call setreg('"', old_reg, old_regtype)<CR>
 
 map <M-s> <Plug>(easymotion-s)
 map <M-w> <Plug>(easymotion-bd-w)
@@ -917,127 +913,119 @@ endif
 " }
 
 " Neocomplete {
-
 if has_key(g:plugs, 'neocomplete.vim')
+	"Note: This option must set it in .vimrc(_vimrc).  NOT IN .gvimrc(_gvimrc)!
+	" Disable AutoComplPop.
+	let g:acp_enableAtStartup = 0
+	" Use neocomplete.
+	let g:neocomplete#enable_at_startup = 1
+	" Use smartcase.
+	let g:neocomplete#enable_smart_case = 1
+	" Set minimum syntax keyword length.
+	let g:neocomplete#sources#syntax#min_keyword_length = 3
+	let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
 
-"Note: This option must set it in .vimrc(_vimrc).  NOT IN .gvimrc(_gvimrc)!
-" Disable AutoComplPop.
-let g:acp_enableAtStartup = 0
-" Use neocomplete.
-let g:neocomplete#enable_at_startup = 1
-" Use smartcase.
-let g:neocomplete#enable_smart_case = 1
-" Set minimum syntax keyword length.
-let g:neocomplete#sources#syntax#min_keyword_length = 3
-let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
+	if has('win32')
+		let g:neocomplete#data_directory = vimfiles_dir.'.cache/neocomplete'
+	endif
 
-if has('win32')
-	let g:neocomplete#data_directory = vimfiles_dir.'.cache/neocomplete'
+	" Define dictionary.
+	let g:neocomplete#sources#dictionary#dictionaries = {
+		\ 'default' : ''
+		\ }
+
+	" Define keyword.
+	if !exists('g:neocomplete#keyword_patterns')
+		let g:neocomplete#keyword_patterns = {}
+	endif
+	let g:neocomplete#keyword_patterns['default'] = '\h\w*'
+
+	" Plugin key-mappings.
+	inoremap <expr><C-/>     neocomplete#undo_completion()
+	inoremap <expr><C-l>     neocomplete#complete_common_string()
+
+	" Recommended key-mappings.
+	" <CR>: close popup and save indent.
+	inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
+	function! s:my_cr_function()
+		return (pumvisible() ? "\<C-y>" : "" ) . "\<CR>"
+		" For no inserting <CR> key.
+		"return pumvisible() ? "\<C-y>" : "\<CR>"
+	endfunction
+	" <TAB>: completion.
+	inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+	" <C-h>, <BS>: close popup and delete backword char.
+	"inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
+	"inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
+	" Close popup by <Space>.
+	"inoremap <expr><Space> pumvisible() ? neocomplete#close_popup() : "\<Space>"
+
+	" For cursor moving in insert mode(Not recommended)
+	"inoremap <expr><Left>  neocomplete#close_popup() . "\<Left>"
+	"inoremap <expr><Right> neocomplete#close_popup() . "\<Right>"
+	"inoremap <expr><Up>    neocomplete#close_popup() . "\<Up>"
+	"inoremap <expr><Down>  neocomplete#close_popup() . "\<Down>"
+	" Or set this.
+	"let g:neocomplete#enable_cursor_hold_i = 1
+	" Or set this.
+	"let g:neocomplete#enable_insert_char_pre = 1
+
+	" AutoComplPop like behavior.
+	"let g:neocomplete#enable_auto_select = 1
+
+	" Shell like behavior(not recommended).
+	"set completeopt+=longest
+	"let g:neocomplete#enable_auto_select = 1
+	"let g:neocomplete#disable_auto_complete = 1
+	"inoremap <expr><TAB>  pumvisible() ? "\<Down>" : "\<C-x>\<C-u>"
+
+	" Enable omni completion.
+	autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+	autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+	autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+	autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+	autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+
+	" Enable heavy omni completion.
+	if !exists('g:neocomplete#sources#omni#input_patterns')
+		let g:neocomplete#sources#omni#input_patterns = {}
+	endif
+	let g:neocomplete#sources#omni#input_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
+	"let g:neocomplete#sources#omni#input_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
+	"let g:neocomplete#sources#omni#input_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
+
+	" For perlomni.vim setting.
+	" https://github.com/c9s/perlomni.vim
+	let g:neocomplete#sources#omni#input_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
 endif
-
-" Define dictionary.
-let g:neocomplete#sources#dictionary#dictionaries = {
-			\ 'default' : ''
-			\ }
-
-" Define keyword.
-if !exists('g:neocomplete#keyword_patterns')
-	let g:neocomplete#keyword_patterns = {}
-endif
-let g:neocomplete#keyword_patterns['default'] = '\h\w*'
-
-" Plugin key-mappings.
-inoremap <expr><C-/>     neocomplete#undo_completion()
-inoremap <expr><C-l>     neocomplete#complete_common_string()
-
-" Recommended key-mappings.
-" <CR>: close popup and save indent.
-inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
-function! s:my_cr_function()
-	return (pumvisible() ? "\<C-y>" : "" ) . "\<CR>"
-	" For no inserting <CR> key.
-	"return pumvisible() ? "\<C-y>" : "\<CR>"
-endfunction
-" <TAB>: completion.
-inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
-" <C-h>, <BS>: close popup and delete backword char.
-"inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
-"inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
-" Close popup by <Space>.
-"inoremap <expr><Space> pumvisible() ? neocomplete#close_popup() : "\<Space>"
-
-" For cursor moving in insert mode(Not recommended)
-"inoremap <expr><Left>  neocomplete#close_popup() . "\<Left>"
-"inoremap <expr><Right> neocomplete#close_popup() . "\<Right>"
-"inoremap <expr><Up>    neocomplete#close_popup() . "\<Up>"
-"inoremap <expr><Down>  neocomplete#close_popup() . "\<Down>"
-" Or set this.
-"let g:neocomplete#enable_cursor_hold_i = 1
-" Or set this.
-"let g:neocomplete#enable_insert_char_pre = 1
-
-" AutoComplPop like behavior.
-"let g:neocomplete#enable_auto_select = 1
-
-" Shell like behavior(not recommended).
-"set completeopt+=longest
-"let g:neocomplete#enable_auto_select = 1
-"let g:neocomplete#disable_auto_complete = 1
-"inoremap <expr><TAB>  pumvisible() ? "\<Down>" : "\<C-x>\<C-u>"
-
-" Enable omni completion.
-autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
-autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
-autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
-
-" Enable heavy omni completion.
-if !exists('g:neocomplete#sources#omni#input_patterns')
-	let g:neocomplete#sources#omni#input_patterns = {}
-endif
-let g:neocomplete#sources#omni#input_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
-"let g:neocomplete#sources#omni#input_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
-"let g:neocomplete#sources#omni#input_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
-
-" For perlomni.vim setting.
-" https://github.com/c9s/perlomni.vim
-let g:neocomplete#sources#omni#input_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
-
-endif
-
 " }
 
 " Neosnippet {
-
 if has_key(g:plugs, 'neosnippet')
+	" Plugin key-mappings.
+	imap <C-l>     <Plug>(neosnippet_expand_or_jump)
+	smap <C-l>     <Plug>(neosnippet_expand_or_jump)
+	xmap <C-l>     <Plug>(neosnippet_expand_target)
 
-" Plugin key-mappings.
-imap <C-l>     <Plug>(neosnippet_expand_or_jump)
-smap <C-l>     <Plug>(neosnippet_expand_or_jump)
-xmap <C-l>     <Plug>(neosnippet_expand_target)
+	" SuperTab like snippets behavior.
+	imap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+		\ "\<Plug>(neosnippet_expand_or_jump)"
+		\: pumvisible() ? "\<C-n>" : "\<TAB>"
+	smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+		\ "\<Plug>(neosnippet_expand_or_jump)"
+		\: "\<TAB>"
 
-" SuperTab like snippets behavior.
-imap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-\ "\<Plug>(neosnippet_expand_or_jump)"
-\: pumvisible() ? "\<C-n>" : "\<TAB>"
-smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-\ "\<Plug>(neosnippet_expand_or_jump)"
-\: "\<TAB>"
+	" For snippet_complete marker.
+	"if has('conceal')
+	"set conceallevel=2 concealcursor=i
+	"endif
 
-" For snippet_complete marker.
-"if has('conceal')
-  "set conceallevel=2 concealcursor=i
-"endif
+	let g:neosnippet#snippets_directory = vimfiles_dir.'snippets'
 
-let g:neosnippet#snippets_directory = vimfiles_dir.'snippets'
-
-if has('win32')
-	let g:neosnippet#data_directory = vimfiles_dir.'.cache/neosnippet'
+	if has('win32')
+		let g:neosnippet#data_directory = vimfiles_dir.'.cache/neosnippet'
+	endif
 endif
-
-endif
-
 " }
 
 " Eclim {
@@ -1050,7 +1038,7 @@ if !exists('g:neocomplete#force_omni_input_patterns')
 	let g:neocomplete#force_omni_input_patterns = {}
 endif
 let g:neocomplete#force_omni_input_patterns.java =
-			\ '\%(\h\w*\|)\)\.\w*'
+	\ '\%(\h\w*\|)\)\.\w*'
 
 " }
 
