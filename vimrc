@@ -256,7 +256,8 @@ endfunction
 autocmd VimEnter * call s:AirlineAfterInit()
 let g:airline_section_y='[%{&ff}]%{&fenc}'
 let g:airline_section_z='%l/%L %c,%v %P'
-let g:airline#extensions#whitespace#mixed_indent_algo = 1
+"let g:airline#extensions#whitespace#mixed_indent_algo = 1
+let g:airline#extensions#whitespace#checks = ['trailing']
 let g:airline#extensions#anzu#enabled=0
 
 " }
