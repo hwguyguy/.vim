@@ -117,7 +117,7 @@ Plug 'lilydjwg/colorizer'
 "endif
 "Plug 'pangloss/vim-javascript', { 'commit': '00624225c6b5ae7858d1186e99540022ced92f98' }
 "Plug 'mxw/vim-jsx'
-"Plug 'posva/vim-vue'
+"Plug 'leafOfTree/vim-vue-plugin'
 "Plug 'mattn/emmet-vim'
 "Plug 'hail2u/vim-css3-syntax'
 "Plug 'cakebaker/scss-syntax.vim'
@@ -135,6 +135,7 @@ Plug 'lilydjwg/colorizer'
 "Plug 'leafgarland/typescript-vim'
 "Plug 'Quramy/tsuquyomi'
 "Plug 'StanAngeloff/php.vim', { 'for': 'php' }
+"Plug '2072/PHP-Indenting-for-VIm', { 'for': 'php' }
 "Plug 'autozimu/LanguageClient-neovim', { 'for': 'php', 'branch': 'next', 'do': 'bash install.sh' }
 "Plug 'roxma/LanguageServer-php-neovim',  { 'for': 'php', 'do': 'composer install && composer run-script parse-stubs' }
 Plug 'chrisbra/csv.vim'
@@ -810,6 +811,12 @@ if has_key(g:plugs, 'vim-go')
 endif
 " }
 
+" php-indent {
+
+let g:PHP_noArrowMatching = 1
+
+" }
+
 " Eclim {
 
 let g:EclimLocateFileDefaultAction = 'edit'
@@ -869,6 +876,7 @@ nnoremap <M-l> <C-w>l
 nnoremap \| :noh<cr>
 nnoremap <kPlus> <C-a>
 nnoremap <kMinus> <C-x>
+nnoremap <C-k> :lcd %:p:h<cr>
 
 inoremap <C-g> <esc>
 inoremap <M-Space> <esc>
