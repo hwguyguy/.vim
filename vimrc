@@ -877,6 +877,8 @@ nnoremap \| :noh<cr>
 nnoremap <kPlus> <C-a>
 nnoremap <kMinus> <C-x>
 nnoremap <C-k> :lcd %:p:h<cr>
+nnoremap <c-c><c-y> "+yy
+vnoremap <c-c><c-y> "+y
 
 inoremap <C-g> <esc>
 inoremap <M-Space> <esc>
