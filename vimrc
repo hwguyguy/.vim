@@ -81,18 +81,7 @@ Plug 'kien/ctrlp.vim'
 Plug 'fisadev/vim-ctrlp-cmdpalette'
 Plug 'jlanzarotta/bufexplorer'
 "Plug 'scrooloose/nerdtree'
-"Plug 'Valloric/YouCompleteMe', {'do': './install.py'}
-if has('python3') && (has('nvim') || v:version >= 800)
-	if !has('nvim')
-		Plug 'roxma/nvim-yarp'
-		Plug 'roxma/vim-hug-neovim-rpc'
-		" pip install --user 'greenlet==0.4.10'
-		" https://github.com/roxma/vim-hug-neovim-rpc/issues/3
-	endif
-	Plug 'Shougo/deoplete.nvim', {'do': ':UpdateRemotePlugins'}
-elseif has('lua') && (v:version > 703 || v:version == 703 && has('patch885'))
-	Plug 'Shougo/neocomplete.vim'
-endif
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 if v:version >= 704
 	Plug 'Shougo/neosnippet'
 	Plug 'Shougo/neosnippet-snippets'
@@ -366,6 +355,10 @@ autocmd FileType clojure setlocal iskeyword-=/
 augroup nginx_syntax
 	autocmd!
 	autocmd FileType nginx setlocal iskeyword-=. iskeyword-=/ iskeyword-=:
+augroup END
+
+augroup jsonc_syntax
+	autocmd FileType json syntax match Comment +\/\/.\+$+
 augroup END
 
 " }
@@ -975,10 +968,10 @@ if has_key(g:plugs, 'vim-anzu')
 endif
 
 if has_key(g:plugs, 'deoplete.nvim')
-	function! s:my_cr_function()
-		return (pumvisible() ? "\<C-y>" : "" ) . "\<CR>"
-	endfunction
-	inoremap <silent><expr><CR> <C-r>=<SID>my_cr_function()<CR>
+	"function! s:my_cr_function()
+	"    return (pumvisible() ? "\<C-y>" : "" ) . "\<CR>"
+	"endfunction
+	"inoremap <silent><expr><CR> <C-r>=<SID>my_cr_function()<CR>
 endif
 
 if has_key(g:plugs, 'neocomplete.vim')
