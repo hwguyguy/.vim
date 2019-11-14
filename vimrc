@@ -282,6 +282,16 @@ set undofile
 set hidden
 set confirm
 
+" Auto reload buffer
+set autoread
+" Trigger `autoread` when files changes on disk
+" https://unix.stackexchange.com/questions/149209/refresh-changed-content-of-file-opened-in-vim/383044#383044
+" https://vi.stackexchange.com/questions/13692/prevent-focusgained-autocmd-running-in-command-line-editing-mode
+autocmd FocusGained,BufEnter,CursorHold,CursorHoldI * if mode() != 'c' | checktime | endif
+" Notification after file change
+" https://vi.stackexchange.com/questions/13091/autocmd-event-for-autoread
+autocmd FileChangedShellPost * echohl WarningMsg | echo "File changed on disk. Buffer reloaded." | echohl None
+
 " }
 
 " Change current directory automatically {
@@ -301,6 +311,7 @@ set mouse+=a
 set backspace=indent,eol,start
 "set nrformats+=alpha " make <C-a> and <C-x> works on alpha numeric characters
 set nrformats-=octal
+autocmd InsertLeave * set nopaste
 
 " }
 
