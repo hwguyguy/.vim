@@ -117,16 +117,11 @@ Plug 'lilydjwg/colorizer'
 "Plug 'nginx/nginx', {'rtp': 'contrib/vim'}
 "if !has('win32') && (has('python') || has('python3'))
 "    Plug 'python-mode/python-mode', { 'branch': 'develop' }
-"    Plug 'davidhalter/jedi-vim'
-"    Plug 'zchee/deoplete-jedi'
 "endif
 "Plug 'fatih/vim-go'
 "Plug 'leafgarland/typescript-vim'
-"Plug 'Quramy/tsuquyomi'
 "Plug 'StanAngeloff/php.vim', { 'for': 'php' }
 "Plug '2072/PHP-Indenting-for-VIm', { 'for': 'php' }
-"Plug 'autozimu/LanguageClient-neovim', { 'for': 'php', 'branch': 'next', 'do': 'bash install.sh' }
-"Plug 'roxma/LanguageServer-php-neovim',  { 'for': 'php', 'do': 'composer install && composer run-script parse-stubs' }
 Plug 'chrisbra/csv.vim'
 
 let vimrc_plugins = vimfiles_dir.'vimrc.plugins'
@@ -607,49 +602,6 @@ if has_key(g:plugs, 'deoplete.nvim')
 endif
 " }
 
-" Neocomplete {
-if has_key(g:plugs, 'neocomplete.vim')
-	let g:neocomplete#enable_at_startup = 1
-	let g:neocomplete#enable_smart_case = 1
-	let g:neocomplete#sources#syntax#min_keyword_length = 3
-	let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
-
-	if has('win32')
-		let g:neocomplete#data_directory = vimfiles_dir.'.cache/neocomplete'
-	endif
-
-	" Define dictionary.
-	let g:neocomplete#sources#dictionary#dictionaries = {
-		\ 'default' : ''
-		\ }
-
-	" Define keyword.
-	if !exists('g:neocomplete#keyword_patterns')
-		let g:neocomplete#keyword_patterns = {}
-	endif
-	let g:neocomplete#keyword_patterns['default'] = '\h\w*'
-
-	" Enable omni completion.
-	autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
-	autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-	autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-	autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
-	autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
-
-	" Enable heavy omni completion.
-	if !exists('g:neocomplete#sources#omni#input_patterns')
-		let g:neocomplete#sources#omni#input_patterns = {}
-	endif
-	let g:neocomplete#sources#omni#input_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
-	"let g:neocomplete#sources#omni#input_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
-	"let g:neocomplete#sources#omni#input_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
-
-	" For perlomni.vim setting.
-	" https://github.com/c9s/perlomni.vim
-	let g:neocomplete#sources#omni#input_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
-endif
-" }
-
 " Neosnippet {
 if has_key(g:plugs, 'neosnippet')
 	" For snippet_complete marker.
@@ -972,26 +924,6 @@ if has_key(g:plugs, 'deoplete.nvim')
 	"    return (pumvisible() ? "\<C-y>" : "" ) . "\<CR>"
 	"endfunction
 	"inoremap <silent><expr><CR> <C-r>=<SID>my_cr_function()<CR>
-endif
-
-if has_key(g:plugs, 'neocomplete.vim')
-	inoremap <expr><C-/>     neocomplete#undo_completion()
-	inoremap <expr><C-l>     neocomplete#complete_common_string()
-
-	" <CR>: close popup and save indent.
-	inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
-	function! s:my_cr_function()
-		return (pumvisible() ? "\<C-y>" : "" ) . "\<CR>"
-		" For no inserting <CR> key.
-		"return pumvisible() ? "\<C-y>" : "\<CR>"
-	endfunction
-	" <TAB>: completion.
-	inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
-	" <C-h>, <BS>: close popup and delete backword char.
-	"inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
-	"inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
-	" Close popup by <Space>.
-	"inoremap <expr><Space> pumvisible() ? neocomplete#close_popup() : "\<Space>"
 endif
 
 if has_key(g:plugs, 'neosnippet')
