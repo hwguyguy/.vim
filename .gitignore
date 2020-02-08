@@ -4,6 +4,8 @@
 /autoload/plug.vim.old
 /plugged
 /vimrc.plugins
+/vimrc.before
+/vimrc.after
 /vimrc.override
 /eclim
 /plugin/eclim.vim

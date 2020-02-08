@@ -1,6 +1,40 @@
+" Variables {
+
+if has('nvim')
+	if !empty($XDG_CONFIG_HOME)
+		let xdg_config_home = fnamemodify($XDG_CONFIG_HOME, ':p')
+
+		if isdirectory($XDG_CONFIG_HOME)
+			let vimrc_dir = xdg_config_home . 'nvim/'
+		endif
+	endif
+
+	if !exists('vimrc_dir')
+		let vimrc_dir = $HOME . '/.config/nvim/'
+	endif
+else
+	let vimrc_dir = $HOME.'/.vim/'
+
+	if has('win32')
+		set runtimepath=$HOME/.vim,$VIM/vimfiles,$VIMRUNTIME,$VIM/vimfiles/after,$HOME/.vim/after
+	endif
+endif
+
+" }
+
+" Run before vimrc {
+
+let vimrc_before = vimrc_dir.'vimrc.before'
+
+if filereadable(vimrc_before)
+	execute 'source '.vimrc_before
+endif
+
+" }
+
 if !has('nvim')
 	set nocompatible
-	set pyx=3
+	"set pyx=3
 endif
 
 " Encoding {
@@ -16,18 +50,9 @@ set langmenu=en_US.UTF-8
 
 " }
 
-" Variables {
-
-let vimfiles_dir = $HOME.'/.vim/'
-if has('win32')
-	set runtimepath=$HOME/.vim,$VIM/vimfiles,$VIMRUNTIME,$VIM/vimfiles/after,$HOME/.vim/after
-endif
-
-" }
-
 " vim-plug {
 
-let vim_plug_location=expand(vimfiles_dir.'autoload/plug.vim')
+let vim_plug_location=expand(vimrc_dir.'autoload/plug.vim')
 if filereadable(vim_plug_location)
 	let s:has_vim_plug = 1
 else
@@ -37,8 +62,8 @@ else
 	else
 		echo "Installing vim-plug"
 	endif
-	silent execute '!mkdir -p '.vimfiles_dir.'autoload'
-	silent execute '!mkdir -p '.vimfiles_dir.'plugged'
+	silent execute '!mkdir -p '.vimrc_dir.'autoload'
+	silent execute '!mkdir -p '.vimrc_dir.'plugged'
 	silent execute '!curl -fLo '.vim_plug_location.' --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
 endif
 
@@ -51,7 +76,7 @@ function! UnPlug(repo)
 endfunction
 command! -nargs=1 -bar UnPlug call UnPlug(<args>)
 
-call plug#begin(vimfiles_dir.'plugged')
+call plug#begin(vimrc_dir.'plugged')
 
 Plug 'bkad/CamelCaseMotion'
 Plug 'Lokaltog/vim-easymotion'
@@ -124,7 +149,7 @@ Plug 'lilydjwg/colorizer'
 "Plug '2072/PHP-Indenting-for-VIm', { 'for': 'php' }
 Plug 'chrisbra/csv.vim'
 
-let vimrc_plugins = vimfiles_dir.'vimrc.plugins'
+let vimrc_plugins = vimrc_dir.'vimrc.plugins'
 
 if filereadable(vimrc_plugins)
 	execute 'source '.vimrc_plugins
@@ -259,10 +284,10 @@ set nowritebackup
 "set backupdir=$VIM/bak
 
 if !has('nvim')
-	let &viminfo="'50,<0,s0,h,n" . vimfiles_dir . ".viminfo"
+	let &viminfo="'50,<0,s0,h,n" . vimrc_dir . ".viminfo"
 endif
 
-let &undodir=vimfiles_dir.'.undo'
+let &undodir=vimrc_dir.'.undo'
 set undofile
 
 " backup files edited from WinSCP
@@ -555,7 +580,7 @@ endif
 " Unite {
 if has_key(g:plugs, 'unite.vim')
 	if has('win32')
-		let g:unite_data_directory = vimfiles_dir.'/.cache/unite'
+		let g:unite_data_directory = vimrc_dir.'/.cache/unite'
 	endif
 
 	call unite#custom#profile('default', 'context', {
@@ -620,10 +645,10 @@ if has_key(g:plugs, 'neosnippet')
 	"set conceallevel=2 concealcursor=i
 	"endif
 
-	let g:neosnippet#snippets_directory = vimfiles_dir.'snippets'
+	let g:neosnippet#snippets_directory = vimrc_dir.'snippets'
 
 	if has('win32')
-		let g:neosnippet#data_directory = vimfiles_dir.'.cache/neosnippet'
+		let g:neosnippet#data_directory = vimrc_dir.'.cache/neosnippet'
 	endif
 endif
 " }
@@ -794,11 +819,11 @@ function! CommandCabbr(abbreviation, expansion)
 endfunction
 command! -nargs=+ CommandCabbr call CommandCabbr(<f-args>)
 
-execute 'command Rc :e '.vimfiles_dir.'vimrc'
+execute 'command Rc :e '.vimrc_dir.'vimrc'
 CommandCabbr rc Rc
-execute 'command Rcp :e '.vimfiles_dir.'vimrc.plugins'
+execute 'command Rcp :e '.vimrc_dir.'vimrc.plugins'
 CommandCabbr rcp Rcp
-execute 'command Rco :e '.vimfiles_dir.'vimrc.override'
+execute 'command Rco :e '.vimrc_dir.'vimrc.override'
 CommandCabbr rco Rco
 
 " }
@@ -976,9 +1001,20 @@ endif
 
 " }
 
+" Run after vimrc {
+
+let vimrc_after = vimrc_dir.'vimrc.after'
+
+if filereadable(vimrc_after)
+	execute 'source '.vimrc_after
+endif
+
+" }
+
+" @deprecated
 " Override {
 
-let vimrc_override = vimfiles_dir.'vimrc.override'
+let vimrc_override = vimrc_dir.'vimrc.override'
 
 if filereadable(vimrc_override)
 	execute 'source '.vimrc_override
